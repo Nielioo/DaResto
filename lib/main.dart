@@ -13,13 +13,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'DaResto',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: '/home',
+      initialRoute: HomePage.routeName,
       routes: {
-        '/home': (context) => const HomePage(),
+        HomePage.routeName: (context) => const HomePage(),
+        RestaurantDetailPage.routeName: (context) => const RestaurantDetailPage(),
       }
     );
   }
