@@ -34,17 +34,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   void filterRestaurants() {
-    List<RestaurantElement> _restaurants = [];
-    _restaurants.addAll(restaurants);
+    List<RestaurantElement> restaurants = [];
+    restaurants.addAll(restaurants);
     if (searchController.text.isNotEmpty) {
-      _restaurants.retainWhere((restaurant) {
+      restaurants.retainWhere((restaurant) {
         String searchTerm = searchController.text.toLowerCase();
         String restaurantName = restaurant.name.toLowerCase();
         return restaurantName.contains(searchTerm);
       });
     }
     setState(() {
-      filteredRestaurants = _restaurants;
+      filteredRestaurants = restaurants;
     });
   }
 
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Restaurant List'),
+        title: const Text('Restaurant List'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(4.0),

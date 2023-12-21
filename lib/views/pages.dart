@@ -1,8 +1,5 @@
 import 'dart:convert';
 
-import 'package:daresto/models/drink_model.dart';
-import 'package:daresto/models/food_model.dart';
-import 'package:daresto/models/menu_model.dart';
 import 'package:daresto/models/restaurant_model.dart';
 import 'package:daresto/views/components/card_menu.dart';
 import 'package:daresto/views/components/card_restaurant.dart';

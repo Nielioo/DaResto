@@ -4,7 +4,7 @@ class MenuCard extends StatelessWidget {
   final String imagePath;
   final String title;
 
-  MenuCard({required this.imagePath, required this.title});
+  const MenuCard({super.key, required this.imagePath, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class MenuCard extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.2,
               fit: BoxFit.cover,
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
               title,
               style: Theme.of(context).textTheme.labelSmall,

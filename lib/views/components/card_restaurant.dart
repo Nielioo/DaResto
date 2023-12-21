@@ -7,7 +7,8 @@ class RestaurantCard extends StatelessWidget {
   final String location;
   final String rating;
 
-  RestaurantCard({
+  const RestaurantCard({
+    super.key,
     required this.imageUrl,
     required this.restaurantName,
     required this.location,
@@ -31,26 +32,26 @@ class RestaurantCard extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 restaurantName,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Row(
                 children: [
-                  Icon(FontAwesomeIcons.map, size: 12),
-                  SizedBox(width: 8),
+                  const Icon(FontAwesomeIcons.map, size: 12),
+                  const SizedBox(width: 8),
                   Text(location),
                 ],
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Row(
                 children: [
-                  Icon(FontAwesomeIcons.star, size: 12),
-                  SizedBox(width: 8),
+                  const Icon(FontAwesomeIcons.star, size: 12),
+                  const SizedBox(width: 8),
                   Text(rating),
                 ],
               ),

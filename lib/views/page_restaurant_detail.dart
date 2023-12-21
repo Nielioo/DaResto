@@ -38,8 +38,8 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                   children: [
                     Text(
                       restaurant.name,
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     Row(
@@ -51,23 +51,35 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                         ),
                         const SizedBox(width: 8),
                         Text(restaurant.city),
+                        const SizedBox(width: 12),
+                        Icon(
+                          FontAwesomeIcons.star,
+                          size: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(restaurant.rating.toString()),
                       ],
                     ),
                     const SizedBox(height: 12),
-                    Text(restaurant.description, style: Theme.of(context).textTheme.labelSmall,),
+                    Text(
+                      restaurant.description,
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
                     const SizedBox(height: 12),
                     Text(
                       'Foods',
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 4),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.15,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.25,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: restaurant.menus.foods.length,
                         itemBuilder: (context, index) {
-                          return MenuCard(imagePath: 'assets/food_dummy.jpg', title: restaurant.menus.foods[index].name);
+                          return MenuCard(
+                              imagePath: 'assets/food_dummy.jpg',
+                              title: restaurant.menus.foods[index].name);
                         },
                       ),
                     ),
@@ -77,13 +89,15 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 4),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.15,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.25,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: restaurant.menus.foods.length,
                         itemBuilder: (context, index) {
-                          return MenuCard(imagePath: 'assets/drink_dummy.png', title: restaurant.menus.drinks[index].name);
+                          return MenuCard(
+                              imagePath: 'assets/drink_dummy.png',
+                              title: restaurant.menus.drinks[index].name);
                         },
                       ),
                     ),
