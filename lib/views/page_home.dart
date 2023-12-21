@@ -34,17 +34,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   void filterRestaurants() {
-    List<RestaurantElement> restaurants = [];
-    restaurants.addAll(restaurants);
+    List<RestaurantElement> tempRestaurants = [];
+    tempRestaurants.addAll(restaurants);
     if (searchController.text.isNotEmpty) {
-      restaurants.retainWhere((restaurant) {
+      tempRestaurants.retainWhere((restaurant) {
         String searchTerm = searchController.text.toLowerCase();
         String restaurantName = restaurant.name.toLowerCase();
         return restaurantName.contains(searchTerm);
       });
-    }
+    }bring
     setState(() {
-      filteredRestaurants = restaurants;
+      filteredRestaurants = tempRestaurants;
     });
   }
 

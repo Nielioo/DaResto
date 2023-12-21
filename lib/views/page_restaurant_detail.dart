@@ -93,7 +93,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                       height: MediaQuery.of(context).size.height * 0.25,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: restaurant.menus.foods.length,
+                        itemCount: restaurant.menus.drinks.length,
                         itemBuilder: (context, index) {
                           return MenuCard(
                               imagePath: 'assets/drink_dummy.png',
