@@ -78,26 +78,49 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: filteredRestaurants.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        RestaurantDetailPage.routeName,
-                        arguments: filteredRestaurants[index], // Pass the restaurant to detail page
-                      );
-                    },
-                    child: RestaurantCard(
-                      imageUrl: filteredRestaurants[index].pictureId,
-                      restaurantName: filteredRestaurants[index].name,
-                      location: filteredRestaurants[index].city,
-                      rating: filteredRestaurants[index].rating.toString(),
+              child: filteredRestaurants.isEmpty
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.warning_amber_rounded,
+                              size: 72,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'There is no restaurant named \"${searchController.text}\"',
+                              style: const TextStyle(fontSize: 16),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: filteredRestaurants.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              RestaurantDetailPage.routeName,
+                              arguments: filteredRestaurants[
+                                  index], // Pass the restaurant to detail page
+                            );
+                          },
+                          child: RestaurantCard(
+                            imageUrl: filteredRestaurants[index].pictureId,
+                            restaurantName: filteredRestaurants[index].name,
+                            location: filteredRestaurants[index].city,
+                            rating:
+                                filteredRestaurants[index].rating.toString(),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             ),
           ],
         ),
