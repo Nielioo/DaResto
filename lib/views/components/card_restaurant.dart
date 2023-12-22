@@ -25,7 +25,7 @@ class RestaurantCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Hero(
-                tag: 'restaurantImage${imageUrl}',
+                tag: 'restaurantImage$imageUrl',
                 child: Image.network(
                   imageUrl,
                   width: MediaQuery.of(context).size.width * 0.3,
