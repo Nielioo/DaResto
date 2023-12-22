@@ -12,17 +12,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'DaResto',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      initialRoute: HomePage.routeName,
-      routes: {
-        HomePage.routeName: (context) => const HomePage(),
-        RestaurantDetailPage.routeName: (context) => const RestaurantDetailPage(),
-      }
-    );
+        title: 'DaResto',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        initialRoute: HomePage.routeName,
+        routes: {
+          HomePage.routeName: (context) => const HomePage(),
+          RestaurantDetailPage.routeName: (context) =>
+              const RestaurantDetailPage(),
+        });
   }
 }
