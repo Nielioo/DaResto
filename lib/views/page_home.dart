@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
         String restaurantName = restaurant.name.toLowerCase();
         return restaurantName.contains(searchTerm);
       });
-    }bring
+    }
     setState(() {
       filteredRestaurants = tempRestaurants;
     });
@@ -86,8 +86,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.pushNamed(
                         context,
                         RestaurantDetailPage.routeName,
-                        arguments: filteredRestaurants[
-                            index], // Pass the restaurant to detail page
+                        arguments: filteredRestaurants[index], // Pass the restaurant to detail page
                       );
                     },
                     child: RestaurantCard(
