@@ -24,11 +24,14 @@ class RestaurantCard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                imageUrl,
-                width: MediaQuery.of(context).size.width * 0.3,
-                height: MediaQuery.of(context).size.height * 0.1,
-                fit: BoxFit.cover,
+              child: Hero(
+                tag: 'restaurantImage${imageUrl}',
+                child: Image.network(
+                  imageUrl,
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -38,7 +41,8 @@ class RestaurantCard extends StatelessWidget {
             children: [
               Text(
                 restaurantName,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Row(
                 children: [

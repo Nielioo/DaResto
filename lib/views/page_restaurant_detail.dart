@@ -31,7 +31,10 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(restaurant.pictureId),
+              Hero(
+                tag: 'restaurantImage${restaurant.pictureId}',
+                child: Image.network(restaurant.pictureId),
+              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
