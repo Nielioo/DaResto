@@ -1,5 +1,4 @@
-import 'package:daresto/models/drink_model.dart';
-import 'package:daresto/models/food_model.dart';
+part of 'models.dart';
 
 class Menu {
   List<Food> foods;

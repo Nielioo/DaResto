@@ -1,3 +1,5 @@
+part of 'models.dart';
+
 class Drink {
   String name;
 

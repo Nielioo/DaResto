@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import 'package:daresto/models/menu_model.dart';
+part of 'models.dart';
 
 Restaurant restaurantFromJson(String str) =>
     Restaurant.fromJson(json.decode(str));
