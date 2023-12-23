@@ -2,8 +2,11 @@ part of 'services.dart';
 
 class RestaurantApiService {
 
+  http.Client client;
+  RestaurantApiService({required this.client});
+
   Future<GetRestaurantList> getRestaurantList() async {
-    var response = await http.get(Uri.parse('${Const.baseUrl}/list'));
+    var response = await client.get(Uri.parse('${Const.baseUrl}/list'));
     if (response.statusCode == 200) {
       return GetRestaurantList.fromJson(json.decode(response.body));
     } else {
@@ -12,7 +15,7 @@ class RestaurantApiService {
   }
 
   Future<GetRestaurantDetail> getRestaurantDetail(id) async {
-    var response = await http.get(Uri.parse('${Const.baseUrl}/detail/$id'));
+    var response = await client.get(Uri.parse('${Const.baseUrl}/detail/$id'));
     if (response.statusCode == 200) {
       return GetRestaurantDetail.fromJson(json.decode(response.body));
     } else {
@@ -21,7 +24,7 @@ class RestaurantApiService {
   }
 
   Future<RestaurantSearch> getRestaurantSearch(query) async {
-    var response = await http.get(Uri.parse('${Const.baseUrl}/search?q=$query'));
+    var response = await client.get(Uri.parse('${Const.baseUrl}/search?q=$query'));
     if (response.statusCode == 200) {
       return RestaurantSearch.fromJson(json.decode(response.body));
     } else {

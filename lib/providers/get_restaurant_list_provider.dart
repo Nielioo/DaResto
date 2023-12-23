@@ -34,6 +34,7 @@ class GetRestaurantListProvider extends ChangeNotifier {
     } catch (e) {
       _state = DataState.error;
       notifyListeners();
+      print(e);
       return _message = 'Error --> $e';
     }
   }
