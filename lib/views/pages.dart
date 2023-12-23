@@ -1,3 +1,4 @@
+import 'package:daresto/models/models.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:daresto/providers/providers.dart';
