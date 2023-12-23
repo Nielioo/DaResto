@@ -1,6 +1,9 @@
 import 'dart:convert';
 
-part 'restaurant_model.dart';
-part 'menu_model.dart';
-part 'food_model.dart';
-part 'drink_model.dart';
+part 'get_restaurant_list_model.dart';
+part 'restaurant_list_model.dart';
+
+part 'get_restaurant_detail_model.dart';
+part 'restaurant_detail_model.dart';
+part 'restaurant_detail_category_model.dart';
+part 'restaurant_detail_customer_review_model.dart';

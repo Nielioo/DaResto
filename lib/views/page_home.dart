@@ -29,7 +29,6 @@ class _HomePageState extends State<HomePage> {
     final String response =
         await rootBundle.loadString('assets/local_restaurant.json');
     final data = await json.decode(response);
-    // print('Data: $data');
     return Restaurant.fromJson(data);
   }
 
