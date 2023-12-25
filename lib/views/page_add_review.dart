@@ -54,9 +54,14 @@ class _AddReviewPageState extends State<AddReviewPage> {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          state.postCustomerReview(widget.id,
-                              _nameController.text, _reviewController.text);
-                          Navigator.pop(context);
+                          state
+                              .postCustomerReview(widget.id,
+                                  _nameController.text, _reviewController.text)
+                              .then(
+                            (_) {
+                              Navigator.pop(context, true);
+                            },
+                          );
                         }
                       },
                       child: const Text('Submit Review'),

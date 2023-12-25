@@ -35,7 +35,7 @@ class _SplashPageState extends State<SplashPage> {
             children: [
               Image.asset('assets/images/daresto_logo.png',
                   width: 80, fit: BoxFit.cover),
-              const SizedBox(height: 16),
+              DaSpacer.vertical(space: Space.medium),
               const Text('DaResto',
                   style: TextStyle(
                       fontSize: 24,

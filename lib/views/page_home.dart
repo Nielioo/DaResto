@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 12.0),
         child: Column(
           children: [
-            const SizedBox(height: 12),
+            DaSpacer.vertical(space: Space.medium),
             TextField(
               controller: watchSearch.searchController,
               decoration: const InputDecoration(
@@ -40,7 +40,7 @@ class HomePage extends StatelessWidget {
                 readSearch.fetchRestaurantSearchResult(value);
               },
             ),
-            const SizedBox(height: 12),
+            DaSpacer.vertical(space: Space.medium),
             watchSearch.searchController.text.isNotEmpty
                 ? Expanded(
                     child: watchSearch.result?.restaurants.isEmpty ?? true
@@ -55,7 +55,7 @@ class HomePage extends StatelessWidget {
                                     Icons.warning_amber_rounded,
                                     size: 72,
                                   ),
-                                  const SizedBox(height: 4),
+                                  DaSpacer.vertical(space: Space.tiny),
                                   Text(
                                     'There is no restaurant named "${watchSearch.searchController.text}"',
                                     style: const TextStyle(fontSize: 16),

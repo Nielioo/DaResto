@@ -89,7 +89,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                         ),
                         DaSpacer.vertical(space: Space.small),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.25,
+                          height: MediaQuery.of(context).size.height * 0.20,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: restaurant.menus.foods.length,
@@ -107,7 +107,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                         ),
                         DaSpacer.vertical(space: Space.small),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.25,
+                          height: MediaQuery.of(context).size.height * 0.20,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: restaurant.menus.drinks.length,
