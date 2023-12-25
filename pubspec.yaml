@@ -33,8 +33,14 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   font_awesome_flutter: ^10.6.0
+  flutter_launcher_icons: ^0.13.1
   http: ^1.1.2
   provider: ^6.1.1
+
+flutter_launcher_icons:
+  image_path: "assets/images/daresto_logo.png"
+  android: true
+  ios: true
 
 dev_dependencies:
   flutter_test:
