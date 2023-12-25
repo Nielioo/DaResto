@@ -2,23 +2,19 @@ part of 'providers.dart';
 
 class GetRestaurantDetailProvider extends ChangeNotifier {
   final RestaurantApiService restaurantApiService;
-  final String id;
 
-  GetRestaurantDetailProvider({required this.restaurantApiService, required this.id}) {
-    fetchRestaurantDetail(id);
-  }
+  GetRestaurantDetailProvider({required this.restaurantApiService});
 
-  late GetRestaurantDetail _restaurantDetail;
-  late DataState _state;
+  GetRestaurantDetail? _restaurantDetail;
+  GetRestaurantDetail? get result => _restaurantDetail;
+
+  DataState? _state;
+  DataState? get state => _state;
+
   String _message = '';
-
   String get message => _message;
 
-  GetRestaurantDetail get result => _restaurantDetail;
-
-  DataState get state => _state;
-
-  Future<dynamic> fetchRestaurantDetail(id) async {
+  Future<dynamic> fetchRestaurantDetail(String id) async {
     try {
       _state = DataState.loading;
       notifyListeners();

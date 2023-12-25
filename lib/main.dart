@@ -9,11 +9,13 @@ import 'package:provider/provider.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final restaurantService = RestaurantApiService(client: http.Client());
 
   // This widget is the root of your application.
   @override
@@ -22,7 +24,17 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => GetRestaurantListProvider(
-            restaurantApiService: RestaurantApiService(client: http.Client()),
+            restaurantApiService: restaurantService,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => GetRestaurantDetailProvider(
+            restaurantApiService: restaurantService,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RestaurantSearchProvider(
+            restaurantApiService: restaurantService,
           ),
         ),
       ],
@@ -36,7 +48,8 @@ class MyApp extends StatelessWidget {
           initialRoute: HomePage.routeName,
           routes: {
             HomePage.routeName: (context) => const HomePage(),
-            RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(id: ModalRoute.of(context)?.settings.arguments as String),
+            RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
+                id: ModalRoute.of(context)?.settings.arguments as String),
           }),
     );
   }

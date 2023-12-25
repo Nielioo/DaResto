@@ -1,5 +1,5 @@
 part of 'shared.dart';
 
-class Const{
+class Const {
   static String baseUrl = 'https://restaurant-api.dicoding.dev';
 }

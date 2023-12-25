@@ -5,7 +5,8 @@ part of 'models.dart';
 GetRestaurantList GetRestaurantListFromJson(String str) =>
     GetRestaurantList.fromJson(json.decode(str));
 
-String GetRestaurantListToJson(GetRestaurantList data) => json.encode(data.toJson());
+String GetRestaurantListToJson(GetRestaurantList data) =>
+    json.encode(data.toJson());
 
 class GetRestaurantList {
   bool error;
@@ -20,7 +21,8 @@ class GetRestaurantList {
     required this.restaurants,
   });
 
-  factory GetRestaurantList.fromJson(Map<String, dynamic> json) => GetRestaurantList(
+  factory GetRestaurantList.fromJson(Map<String, dynamic> json) =>
+      GetRestaurantList(
         error: json["error"],
         message: json["message"],
         count: json["count"],

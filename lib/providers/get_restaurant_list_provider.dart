@@ -7,15 +7,14 @@ class GetRestaurantListProvider extends ChangeNotifier {
     fetchRestaurantList();
   }
 
-  late GetRestaurantList _restaurantList;
-  late DataState _state;
+  GetRestaurantList? _restaurantList;
+  GetRestaurantList? get result => _restaurantList;
+
+  DataState? _state;
+  DataState? get state => _state;
+
   String _message = '';
-
   String get message => _message;
-
-  GetRestaurantList get result => _restaurantList;
-
-  DataState get state => _state;
 
   Future<dynamic> fetchRestaurantList() async {
     try {
@@ -34,7 +33,6 @@ class GetRestaurantListProvider extends ChangeNotifier {
     } catch (e) {
       _state = DataState.error;
       notifyListeners();
-      print(e);
       return _message = 'Error --> $e';
     }
   }

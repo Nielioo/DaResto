@@ -1,7 +1,6 @@
 part of 'services.dart';
 
 class RestaurantApiService {
-
   http.Client client;
   RestaurantApiService({required this.client});
 
@@ -24,7 +23,8 @@ class RestaurantApiService {
   }
 
   Future<RestaurantSearch> getRestaurantSearch(query) async {
-    var response = await client.get(Uri.parse('${Const.baseUrl}/search?q=$query'));
+    var response =
+        await client.get(Uri.parse('${Const.baseUrl}/search?q=$query'));
     if (response.statusCode == 200) {
       return RestaurantSearch.fromJson(json.decode(response.body));
     } else {

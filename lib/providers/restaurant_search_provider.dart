@@ -2,40 +2,39 @@ part of 'providers.dart';
 
 class RestaurantSearchProvider extends ChangeNotifier {
   final RestaurantApiService restaurantApiService;
-  final String query;
 
-  RestaurantSearchProvider({required this.restaurantApiService, required this.query}) {
-    fetchRestaurantSearchResult();
-  }
+  RestaurantSearchProvider({required this.restaurantApiService});
 
-  late RestaurantSearch _restaurantSearchResult;
-  late DataState _state;
+  final TextEditingController _searchController = TextEditingController();
+  TextEditingController get searchController => _searchController;
+
+  RestaurantSearch? _restaurantSearchResult;
+  RestaurantSearch? get result => _restaurantSearchResult;
+
+  DataState? _state;
+  DataState? get state => _state;
+
   String _message = '';
-
   String get message => _message;
 
-  RestaurantSearch get result => _restaurantSearchResult;
-
-  DataState get state => _state;
-
-  Future<dynamic> fetchRestaurantSearchResult() async {
+  Future<dynamic> fetchRestaurantSearchResult(String query) async {
     try {
       _state = DataState.loading;
       notifyListeners();
       final response = await restaurantApiService.getRestaurantSearch(query);
       if (response.restaurants.isEmpty) {
         _state = DataState.noData;
+        _message = 'Empty Data';
         notifyListeners();
-        return _message = 'Empty Data';
       } else {
         _state = DataState.hasData;
+        _restaurantSearchResult = response;
         notifyListeners();
-        return _restaurantSearchResult = response;
       }
     } catch (e) {
       _state = DataState.error;
+      _message = 'Error --> $e';
       notifyListeners();
-      return _message = 'Error --> $e';
     }
   }
 }

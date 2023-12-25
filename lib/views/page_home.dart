@@ -1,55 +1,18 @@
 part of 'pages.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   static const String routeName = '/home';
 
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  List<RestaurantList> restaurants = [];
-  List<RestaurantList> filteredRestaurants = [];
-
-  final TextEditingController _searchController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    fetchRestaurants();
-  }
-
-  void fetchRestaurants() async {
-    var restaurantListProvider = GetRestaurantListProvider(
-      restaurantApiService: RestaurantApiService(client: http.Client()),
-    );
-    await restaurantListProvider.fetchRestaurantList();
-    setState(() {
-      restaurants = restaurantListProvider.result.restaurants;
-      filteredRestaurants = restaurants;
-    });
-  }
-
-  void searchRestaurants(String query) {
-    List<RestaurantList> tempRestaurants = [];
-    tempRestaurants.addAll(restaurants);
-
-    if (query.isNotEmpty) {
-      tempRestaurants.retainWhere((restaurant) {
-        String searchTerm = query.toLowerCase();
-        String restaurantName = restaurant.name.toLowerCase();
-        return restaurantName.contains(searchTerm);
-      });
-    }
-    setState(() {
-      filteredRestaurants = tempRestaurants;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // Listen variable changes, best for calling variable
+    final watchSearch = context.watch<RestaurantSearchProvider>();
+
+    // Only read variable, not for listen changes, best for calling function
+    final readSearch = context.read<RestaurantSearchProvider>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Restaurant List'),
@@ -62,7 +25,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             const SizedBox(height: 12),
             TextField(
-              controller: _searchController,
+              controller: watchSearch.searchController,
               decoration: const InputDecoration(
                 contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                 hintText: "Search Restaurant",
@@ -74,35 +37,90 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               onChanged: (value) {
-                searchRestaurants(value);
+                readSearch.fetchRestaurantSearchResult(value);
               },
             ),
             const SizedBox(height: 12),
-            Expanded(
-              child: filteredRestaurants.isEmpty
-                  ? Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.warning_amber_rounded,
-                              size: 72,
+            watchSearch.searchController.text.isNotEmpty
+                ? Expanded(
+                    child: watchSearch.result?.restaurants.isEmpty ?? true
+                        ? Center(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.warning_amber_rounded,
+                                    size: 72,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'There is no restaurant named "${watchSearch.searchController.text}"',
+                                    style: const TextStyle(fontSize: 16),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              'There is no restaurant named "${_searchController.text}"',
-                              style: const TextStyle(fontSize: 16),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  : Expanded(
-                      child: Consumer<GetRestaurantListProvider>(
-                          builder: (context, state, _) {
+                          )
+                        : Consumer<RestaurantSearchProvider>(
+                            builder: (context, state, _) {
+                              if (state.state == DataState.loading) {
+                                return const Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.deepPurple,
+                                  ),
+                                );
+                              } else if (state.state == DataState.hasData) {
+                                final restaurants =
+                                    state.result?.restaurants ?? [];
+
+                                return ListView.builder(
+                                  itemCount: restaurants.length,
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          RestaurantDetailPage.routeName,
+                                          arguments: restaurants[index]
+                                              .id, // Pass the restaurant to detail page
+                                        );
+                                      },
+                                      child: RestaurantCard(
+                                        imageUrl:
+                                            '${Const.baseUrl}/images/small/${restaurants[index].pictureId}',
+                                        restaurantName: restaurants[index].name,
+                                        location: restaurants[index].city,
+                                        rating: restaurants[index]
+                                            .rating
+                                            .toString(),
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else if (state.state == DataState.noData) {
+                                return const Center(
+                                  child: Text("No Data Found!"),
+                                );
+                              } else if (state.state == DataState.error) {
+                                return const Center(
+                                  child: Text(
+                                      "There is an error while load data!"),
+                                );
+                              } else {
+                                return const Center(
+                                  child: Text("Failed to Load Data!"),
+                                );
+                              }
+                            },
+                          ),
+                  )
+                : Expanded(
+                    child: Consumer<GetRestaurantListProvider>(
+                      builder: (context, state, _) {
                         if (state.state == DataState.loading) {
                           return const Center(
                             child: CircularProgressIndicator(
@@ -110,7 +128,8 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
                         } else if (state.state == DataState.hasData) {
-                          var restaurants = filteredRestaurants;
+                          final restaurants = state.result!.restaurants;
+
                           return ListView.builder(
                             itemCount: restaurants.length,
                             itemBuilder: (context, index) {
@@ -146,9 +165,9 @@ class _HomePageState extends State<HomePage> {
                             child: Text("Failed to Load Data!"),
                           );
                         }
-                      }),
+                      },
                     ),
-            ),
+                  ),
           ],
         ),
       ),
