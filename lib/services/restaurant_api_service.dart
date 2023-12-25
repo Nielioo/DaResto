@@ -31,4 +31,20 @@ class RestaurantApiService {
       throw Exception('Failed to get restaurant data');
     }
   }
+
+  Future<CustomerReview> postCustomerReview(CustomerReview reviewData) async {
+    var response = await client.post(
+      Uri.parse('${Const.baseUrl}/review'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(reviewData.toJson()),
+    );
+    if (response.statusCode == 200) {
+      return CustomerReview.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to post customer review');
+    }
+  }
+  
 }

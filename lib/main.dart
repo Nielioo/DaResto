@@ -37,6 +37,11 @@ class MyApp extends StatelessWidget {
             restaurantApiService: restaurantService,
           ),
         ),
+        ChangeNotifierProvider(
+          create: (_) => CustomerReviewProvider(
+            restaurantApiService: restaurantService,
+          ),
+        ),
       ],
       child: GestureDetector(
         onTap: (){
@@ -55,6 +60,7 @@ class MyApp extends StatelessWidget {
               HomePage.routeName: (context) => const HomePage(),
               RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
                   id: ModalRoute.of(context)?.settings.arguments as String),
+              AddReviewPage.routeName: (context) => const AddReviewPage(),
             }),
       ),
     );

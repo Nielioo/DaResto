@@ -119,9 +119,23 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                           ),
                         ),
                         DaSpacer.vertical(space: Space.medium),
-                        Text(
-                          'Review',
-                          style: Theme.of(context).textTheme.headlineSmall,
+                        Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Review',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AddReviewPage.routeName,
+                                );
+                              },
+                            ),
+                          ],
                         ),
                         DaSpacer.vertical(space: Space.small),
                         SizedBox(
