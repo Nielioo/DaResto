@@ -17,12 +17,6 @@ class _AddReviewPageState extends State<AddReviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Listen variable changes, best for calling variable
-    final watchCustomerReview = context.watch<CustomerReviewProvider>();
-
-    // Only read variable, not for listen changes, best for calling function
-    final readCustomerReview = context.read<CustomerReviewProvider>();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Review'),
@@ -60,12 +54,8 @@ class _AddReviewPageState extends State<AddReviewPage> {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          var review = CustomerReview(
-                            name: _nameController.text,
-                            review: _reviewController.text,
-                            date: DateTime.now().toIso8601String(),
-                          );
-                          state.postCustomerReview(widget.id, review);
+                          state.postCustomerReview(widget.id,
+                              _nameController.text, _reviewController.text);
                           Navigator.pop(context);
                         }
                       },
