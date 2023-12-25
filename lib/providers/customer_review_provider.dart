@@ -14,11 +14,11 @@ class CustomerReviewProvider extends ChangeNotifier {
   String _message = '';
   String get message => _message;
 
-  Future<dynamic> postCustomerReview(CustomerReview data) async {
+  Future<dynamic> postCustomerReview(String id, CustomerReview reviewData) async {
     try {
       _state = DataState.loading;
       notifyListeners();
-      final response = await restaurantApiService.postCustomerReview(data);
+      final response = await restaurantApiService.postCustomerReview(id, reviewData);
       if (response.review.isEmpty) {
         _state = DataState.noData;
         notifyListeners();

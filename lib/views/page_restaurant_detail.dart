@@ -127,11 +127,21 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                               style: Theme.of(context).textTheme.headlineSmall,
                             ),
                             IconButton(
-                              icon: const Icon(Icons.add),
+                              icon: const Icon(Icons.add_circle_rounded),
                               onPressed: () {
                                 Navigator.pushNamed(
                                   context,
                                   AddReviewPage.routeName,
+                                  arguments: restaurant.id,
+                                ).then(
+                                  (result) {
+                                    if (result != null && result == true) {
+                                      Provider.of<GetRestaurantDetailProvider>(
+                                              context,
+                                              listen: false)
+                                          .fetchRestaurantDetail(widget.id);
+                                    }
+                                  },
                                 );
                               },
                             ),

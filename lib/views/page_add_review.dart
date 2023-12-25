@@ -2,8 +2,9 @@ part of 'pages.dart';
 
 class AddReviewPage extends StatefulWidget {
   static const String routeName = '/add-review';
+  final String id;
 
-  const AddReviewPage({super.key});
+  const AddReviewPage({super.key, required this.id});
 
   @override
   State<AddReviewPage> createState() => _AddReviewPageState();
@@ -29,47 +30,51 @@ class _AddReviewPageState extends State<AddReviewPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(Space.medium),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
-                    }
-                    return null;
-                  },
+          child: Consumer<CustomerReviewProvider>(
+            builder: (context, state, _) {
+              return Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(labelText: 'Name'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _reviewController,
+                      decoration: const InputDecoration(labelText: 'Review'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your review';
+                        }
+                        return null;
+                      },
+                    ),
+                    DaSpacer.vertical(space: Space.large),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          var review = CustomerReview(
+                            name: _nameController.text,
+                            review: _reviewController.text,
+                            date: DateTime.now().toIso8601String(),
+                          );
+                          state.postCustomerReview(widget.id, review);
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: const Text('Submit Review'),
+                    ),
+                  ],
                 ),
-                TextFormField(
-                  controller: _reviewController,
-                  decoration: const InputDecoration(labelText: 'Review'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your review';
-                    }
-                    return null;
-                  },
-                ),
-                DaSpacer.vertical(space: Space.large),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      var review = CustomerReview(
-                        name: _nameController.text,
-                        review: _reviewController.text,
-                        date: DateTime.now().toIso8601String(),
-                      );
-                      watchCustomerReview.postCustomerReview(review);
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: const Text('Submit Review'),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),

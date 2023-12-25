@@ -32,11 +32,11 @@ class RestaurantApiService {
     }
   }
 
-  Future<CustomerReview> postCustomerReview(CustomerReview reviewData) async {
+  Future<CustomerReview> postCustomerReview(String id, CustomerReview reviewData) async {
     var response = await client.post(
       Uri.parse('${Const.baseUrl}/review'),
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(reviewData.toJson()),
     );
