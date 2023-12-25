@@ -30,8 +30,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
         title: const Text('Restaurant Detail'),
       ),
       body: SingleChildScrollView(
-        child: Center(
-          child: Consumer<GetRestaurantDetailProvider>(
+        child: Consumer<GetRestaurantDetailProvider>(
             builder: (context, state, _) {
               if (state.state == DataState.loading) {
                 return const Center(
@@ -42,7 +41,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
               } else if (state.state == DataState.hasData) {
                 var restaurant = state.result!.restaurant;
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Hero(
                       tag: 'restaurantImage${restaurant.pictureId}',
@@ -52,6 +51,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             restaurant.name,
@@ -60,7 +60,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                           ),
                           const SizedBox(height: 8),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Icon(
                                 FontAwesomeIcons.map,
@@ -118,6 +118,24 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                               },
                             ),
                           ),
+                          const SizedBox(height: 12),
+                          Text(
+                            'Review',
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          const SizedBox(height: 4),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.75,
+                            child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: restaurant.menus.drinks.length,
+                              itemBuilder: (context, index) {
+                                return MenuCard(
+                                    imagePath: 'assets/drink_dummy.png',
+                                    title: restaurant.menus.drinks[index].name);
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -138,7 +156,6 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
               }
             },
           ),
-        ),
       ),
     );
   }

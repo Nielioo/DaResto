@@ -38,19 +38,25 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ],
-      child: MaterialApp(
-          title: 'DaResto',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          initialRoute: HomePage.routeName,
-          routes: {
-            HomePage.routeName: (context) => const HomePage(),
-            RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
-                id: ModalRoute.of(context)?.settings.arguments as String),
-          }),
+      child: GestureDetector(
+        onTap: (){
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: MaterialApp(
+            title: 'DaResto',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+            initialRoute: SplashPage.routeName,
+            routes: {
+              SplashPage.routeName: (context) => const SplashPage(),
+              HomePage.routeName: (context) => const HomePage(),
+              RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
+                  id: ModalRoute.of(context)?.settings.arguments as String),
+            }),
+      ),
     );
   }
 }
