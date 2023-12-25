@@ -1,9 +1,11 @@
 part of 'pages.dart';
 
 class RestaurantDetailPage extends StatefulWidget {
-  const RestaurantDetailPage({super.key});
-
   static const String routeName = '/restaurant-detail';
+
+  final String id;
+
+  const RestaurantDetailPage({super.key, required this.id});
 
   @override
   State<RestaurantDetailPage> createState() => _RestaurantDetailPageState();
@@ -11,104 +13,174 @@ class RestaurantDetailPage extends StatefulWidget {
 
 class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
   @override
+  void initState() {
+    // Called `fetchRestaurantDetail()` after `build()` already executed when RestaurantDetailPage is opened
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context
+          .read<GetRestaurantDetailProvider>()
+          .fetchRestaurantDetail(widget.id);
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final RestaurantElement? restaurant =
-        ModalRoute.of(context)?.settings.arguments as RestaurantElement?;
-
-    // Check if restaurant is null
-    if (restaurant == null) {
-      return const Scaffold(
-        body: Center(child: Text('No restaurant data found')),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('${restaurant.name}\'s Detail'),
+        title: const Text('Restaurant Detail'),
       ),
       body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Hero(
-                tag: 'restaurantImage${restaurant.pictureId}',
-                child: Image.network(restaurant.pictureId),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Text(
-                      restaurant.name,
-                      style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+        child: Consumer<GetRestaurantDetailProvider>(
+          builder: (context, state, _) {
+            if (state.state == DataState.loading) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.deepPurple,
+                ),
+              );
+            } else if (state.state == DataState.hasData) {
+              var restaurant = state.result!.restaurant;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Hero(
+                    tag: 'restaurantImage${restaurant.pictureId}',
+                    child: Image.network(
+                        '${Const.baseUrl}/images/large/${restaurant.pictureId}'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          FontAwesomeIcons.map,
-                          size: MediaQuery.of(context).size.height * 0.02,
+                        Text(
+                          restaurant.name,
+                          style: const TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(width: 8),
-                        Text(restaurant.city),
-                        const SizedBox(width: 12),
-                        Icon(
-                          FontAwesomeIcons.star,
-                          size: MediaQuery.of(context).size.height * 0.02,
+                        DaSpacer.vertical(space: Space.small),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.map,
+                              size: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            DaSpacer.horizontal(space: Space.small),
+                            Text(restaurant.city),
+                            DaSpacer.horizontal(space: Space.medium),
+                            Icon(
+                              FontAwesomeIcons.star,
+                              size: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            DaSpacer.horizontal(space: Space.small),
+                            Text(restaurant.rating.toString()),
+                          ],
                         ),
-                        const SizedBox(width: 8),
-                        Text(restaurant.rating.toString()),
+                        DaSpacer.vertical(space: Space.medium),
+                        Text(
+                          restaurant.description,
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                        DaSpacer.vertical(space: Space.medium),
+                        Text(
+                          'Foods',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        DaSpacer.vertical(space: Space.small),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.20,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: restaurant.menus.foods.length,
+                            itemBuilder: (context, index) {
+                              return MenuCard(
+                                  imagePath: 'assets/food_dummy.jpg',
+                                  title: restaurant.menus.foods[index].name);
+                            },
+                          ),
+                        ),
+                        DaSpacer.vertical(space: Space.medium),
+                        Text(
+                          'Drinks',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        DaSpacer.vertical(space: Space.small),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.20,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: restaurant.menus.drinks.length,
+                            itemBuilder: (context, index) {
+                              return MenuCard(
+                                  imagePath: 'assets/drink_dummy.png',
+                                  title: restaurant.menus.drinks[index].name);
+                            },
+                          ),
+                        ),
+                        DaSpacer.vertical(space: Space.medium),
+                        Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Review',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.add_circle_rounded),
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AddReviewPage.routeName,
+                                  arguments: restaurant.id,
+                                ).then(
+                                  (result) {
+                                    if (result != null && result == true) {
+                                      Provider.of<GetRestaurantDetailProvider>(
+                                              context,
+                                              listen: false)
+                                          .fetchRestaurantDetail(widget.id);
+                                    }
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        DaSpacer.vertical(space: Space.small),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: restaurant.customerReviews.length,
+                            itemBuilder: (context, index) {
+                              return CustomerReviewCard(
+                                  name: restaurant.customerReviews[index].name,
+                                  review:
+                                      restaurant.customerReviews[index].review,
+                                  date: restaurant.customerReviews[index].date);
+                            },
+                          ),
+                        ),
                       ],
                     ),
-                    const SizedBox(height: 12),
-                    Text(
-                      restaurant.description,
-                      style: Theme.of(context).textTheme.labelSmall,
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Foods',
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                    const SizedBox(height: 4),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.25,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: restaurant.menus.foods.length,
-                        itemBuilder: (context, index) {
-                          return MenuCard(
-                              imagePath: 'assets/food_dummy.jpg',
-                              title: restaurant.menus.foods[index].name);
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Drinks',
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                    const SizedBox(height: 4),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.25,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: restaurant.menus.drinks.length,
-                        itemBuilder: (context, index) {
-                          return MenuCard(
-                              imagePath: 'assets/drink_dummy.png',
-                              title: restaurant.menus.drinks[index].name);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+                  ),
+                ],
+              );
+            } else if (state.state == DataState.noData) {
+              return const Center(
+                child: Text("No Data Found!"),
+              );
+            } else if (state.state == DataState.error) {
+              return const Center(
+                child: Text("There is an error while load data!"),
+              );
+            } else {
+              return const Center(
+                child: Text("Failed to Load Data!"),
+              );
+            }
+          },
         ),
       ),
     );

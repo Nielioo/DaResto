@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of '../pages.dart';
 
 class MenuCard extends StatelessWidget {
   final String imagePath;
@@ -12,13 +12,14 @@ class MenuCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
               imagePath,
               width: MediaQuery.of(context).size.width * 0.2,
               fit: BoxFit.cover,
             ),
-            const SizedBox(height: 4),
+            DaSpacer.vertical(space: Space.small),
             Text(
               title,
               style: Theme.of(context).textTheme.labelSmall,

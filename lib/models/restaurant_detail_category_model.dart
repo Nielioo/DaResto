@@ -1,11 +1,13 @@
-class Drink {
+part of 'models.dart';
+
+class Category {
   String name;
 
-  Drink({
+  Category({
     required this.name,
   });
 
-  factory Drink.fromJson(Map<String, dynamic> json) => Drink(
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
         name: json["name"],
       );
 

@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+part of '../pages.dart';
 
 class RestaurantCard extends StatelessWidget {
   final String imageUrl;
@@ -35,7 +34,7 @@ class RestaurantCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          DaSpacer.horizontal(space: Space.medium),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,15 +46,14 @@ class RestaurantCard extends StatelessWidget {
               Row(
                 children: [
                   const Icon(FontAwesomeIcons.map, size: 12),
-                  const SizedBox(width: 8),
+                  DaSpacer.horizontal(space: Space.small),
                   Text(location),
                 ],
               ),
-              const SizedBox(height: 12),
               Row(
                 children: [
                   const Icon(FontAwesomeIcons.star, size: 12),
-                  const SizedBox(width: 8),
+                  DaSpacer.horizontal(space: Space.small),
                   Text(rating),
                 ],
               ),
