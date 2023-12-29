@@ -16,6 +16,13 @@ class _AddReviewPageState extends State<AddReviewPage> {
   final _reviewController = TextEditingController();
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _reviewController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

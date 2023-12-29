@@ -1,4 +1,4 @@
-part of '../pages.dart';
+part of 'widgets.dart';
 
 class DaSpacer {
   static SizedBox horizontal({double space = 8}) {

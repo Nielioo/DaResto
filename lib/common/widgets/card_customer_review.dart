@@ -1,4 +1,4 @@
-part of '../pages.dart';
+part of 'widgets.dart';
 
 class CustomerReviewCard extends StatelessWidget {
   final String name;

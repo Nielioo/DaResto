@@ -1,4 +1,4 @@
-part of '../pages.dart';
+part of 'widgets.dart';
 
 class MenuCard extends StatelessWidget {
   final String imagePath;
