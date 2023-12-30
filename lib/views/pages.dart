@@ -9,5 +9,8 @@ import 'package:provider/provider.dart';
 
 part 'page_add_review.dart';
 part 'page_home.dart';
+part 'page_restaurant_list.dart';
 part 'page_restaurant_detail.dart';
+part 'page_restaurant_favorite.dart';
+part 'page_settings.dart';
 part 'page_splash.dart';
