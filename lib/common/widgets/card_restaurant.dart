@@ -1,14 +1,14 @@
-part of '../pages.dart';
+part of 'widgets.dart';
 
 class RestaurantCard extends StatelessWidget {
-  final String imageUrl;
+  final String pictureId;
   final String restaurantName;
   final String location;
   final String rating;
 
   const RestaurantCard({
     super.key,
-    required this.imageUrl,
+    required this.pictureId,
     required this.restaurantName,
     required this.location,
     required this.rating,
@@ -24,9 +24,9 @@ class RestaurantCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Hero(
-                tag: 'restaurantImage$imageUrl',
+                tag: 'restaurantImage$pictureId',
                 child: Image.network(
-                  imageUrl,
+                  '${Const.baseUrl}/images/large/$pictureId',
                   width: MediaQuery.of(context).size.width * 0.3,
                   height: MediaQuery.of(context).size.height * 0.1,
                   fit: BoxFit.cover,

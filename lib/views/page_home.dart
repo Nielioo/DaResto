@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
     final watchSearch = context.watch<RestaurantSearchProvider>();
 
     // Only read variable, not for listen changes, best for calling function
+    final readList = context.read<GetRestaurantListProvider>();
     final readSearch = context.read<RestaurantSearchProvider>();
 
     return Scaffold(
@@ -90,8 +91,7 @@ class HomePage extends StatelessWidget {
                                         );
                                       },
                                       child: RestaurantCard(
-                                        imageUrl:
-                                            '${Const.baseUrl}/images/small/${restaurants[index].pictureId}',
+                                        pictureId: restaurants[index].pictureId,
                                         restaurantName: restaurants[index].name,
                                         location: restaurants[index].city,
                                         rating: restaurants[index]
@@ -106,9 +106,25 @@ class HomePage extends StatelessWidget {
                                   child: Text("No Data Found!"),
                                 );
                               } else if (state.state == DataState.error) {
-                                return const Center(
-                                  child: Text(
-                                      "There is an error while load data!"),
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                        "There is an error while load data!"),
+                                    Gap.h12,
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        readList.fetchRestaurantList();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                      child: const Text('Refresh Data'),
+                                    )
+                                  ],
                                 );
                               } else {
                                 return const Center(
@@ -143,8 +159,7 @@ class HomePage extends StatelessWidget {
                                   );
                                 },
                                 child: RestaurantCard(
-                                  imageUrl:
-                                      '${Const.baseUrl}/images/small/${restaurants[index].pictureId}',
+                                  pictureId: restaurants[index].pictureId,
                                   restaurantName: restaurants[index].name,
                                   location: restaurants[index].city,
                                   rating: restaurants[index].rating.toString(),
@@ -157,8 +172,23 @@ class HomePage extends StatelessWidget {
                             child: Text("No Data Found!"),
                           );
                         } else if (state.state == DataState.error) {
-                          return const Center(
-                            child: Text("There is an error while load data!"),
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("There is an error while load data!"),
+                              Gap.h12,
+                              ElevatedButton(
+                                onPressed: () {
+                                  readList.fetchRestaurantList();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                child: const Text('Refresh Data'),
+                              )
+                            ],
                           );
                         } else {
                           return const Center(

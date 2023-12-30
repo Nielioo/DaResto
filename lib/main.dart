@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: MaterialApp(
@@ -59,8 +59,11 @@ class MyApp extends StatelessWidget {
               SplashPage.routeName: (context) => const SplashPage(),
               HomePage.routeName: (context) => const HomePage(),
               RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
-                  id: ModalRoute.of(context)?.settings.arguments as String),
-              AddReviewPage.routeName: (context) => AddReviewPage(id: ModalRoute.of(context)?.settings.arguments as String),
+                    id: ModalRoute.of(context)?.settings.arguments as String,
+                  ),
+              AddReviewPage.routeName: (context) => AddReviewPage(
+                    id: ModalRoute.of(context)?.settings.arguments as String,
+                  ),
             }),
       ),
     );

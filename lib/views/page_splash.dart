@@ -30,20 +30,20 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset('assets/images/daresto_logo.png',
-                  width: 80, fit: BoxFit.cover),
-              DaSpacer.vertical(space: Space.medium),
-              const Text('DaResto',
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple)),
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/daresto_logo.png',
+                width: 80, fit: BoxFit.cover),
+            DaSpacer.vertical(space: Space.medium),
+            const Text('DaResto',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple)),
+          ],
         ),
+      ),
     );
   }
 }
