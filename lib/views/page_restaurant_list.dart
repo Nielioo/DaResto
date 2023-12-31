@@ -19,7 +19,7 @@ class RestaurantListPage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(12.0, 16.0, 12.0, 8.0),
         child: Column(
           children: [
-            DaSpacer.vertical(space: Space.medium),
+            Gap.h12,
             TextField(
               controller: watchSearch.searchController,
               decoration: const InputDecoration(
@@ -51,7 +51,7 @@ class RestaurantListPage extends StatelessWidget {
                                     Icons.warning_amber_rounded,
                                     size: 72,
                                   ),
-                                  DaSpacer.vertical(space: Space.tiny),
+                                  Gap.h4,
                                   Text(
                                     'There is no restaurant named "${watchSearch.searchController.text}"',
                                     style: const TextStyle(fontSize: 16),

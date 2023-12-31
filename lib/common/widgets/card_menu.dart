@@ -19,7 +19,7 @@ class MenuCard extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.2,
               fit: BoxFit.cover,
             ),
-            DaSpacer.vertical(space: Space.small),
+            Gap.h12,
             Text(
               title,
               style: Theme.of(context).textTheme.labelSmall,

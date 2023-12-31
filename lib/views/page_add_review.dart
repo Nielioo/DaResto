@@ -30,7 +30,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(Space.medium),
+          padding: const EdgeInsets.all(8.0),
           child: Consumer<CustomerReviewProvider>(
             builder: (context, state, _) {
               return Form(
@@ -57,7 +57,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                         return null;
                       },
                     ),
-                    DaSpacer.vertical(space: Space.large),
+                    Gap.h16,
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {

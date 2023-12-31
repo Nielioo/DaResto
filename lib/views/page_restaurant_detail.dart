@@ -58,7 +58,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                           style: const TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                        DaSpacer.vertical(space: Space.small),
+                        Gap.h4,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -66,28 +66,28 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                               FontAwesomeIcons.map,
                               size: MediaQuery.of(context).size.height * 0.02,
                             ),
-                            DaSpacer.horizontal(space: Space.small),
+                            Gap.w4,
                             Text(restaurant.city),
-                            DaSpacer.horizontal(space: Space.medium),
+                            Gap.w12,
                             Icon(
                               FontAwesomeIcons.star,
                               size: MediaQuery.of(context).size.height * 0.02,
                             ),
-                            DaSpacer.horizontal(space: Space.small),
+                            Gap.w4,
                             Text(restaurant.rating.toString()),
                           ],
                         ),
-                        DaSpacer.vertical(space: Space.medium),
+                        Gap.h12,
                         Text(
                           restaurant.description,
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
-                        DaSpacer.vertical(space: Space.medium),
+                        Gap.h12,
                         Text(
                           'Foods',
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
-                        DaSpacer.vertical(space: Space.small),
+                        Gap.h4,
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.20,
                           child: ListView.builder(
@@ -100,12 +100,12 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                             },
                           ),
                         ),
-                        DaSpacer.vertical(space: Space.medium),
+                        Gap.h12,
                         Text(
                           'Drinks',
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
-                        DaSpacer.vertical(space: Space.small),
+                        Gap.h4,
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.20,
                           child: ListView.builder(
@@ -118,7 +118,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                             },
                           ),
                         ),
-                        DaSpacer.vertical(space: Space.medium),
+                        Gap.h12,
                         Row(
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -147,7 +147,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                             ),
                           ],
                         ),
-                        DaSpacer.vertical(space: Space.small),
+                        Gap.h4,
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.5,
                           child: ListView.builder(

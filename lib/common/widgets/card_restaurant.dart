@@ -34,7 +34,7 @@ class RestaurantCard extends StatelessWidget {
               ),
             ),
           ),
-          DaSpacer.horizontal(space: Space.medium),
+          Gap.w12,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -46,14 +46,14 @@ class RestaurantCard extends StatelessWidget {
               Row(
                 children: [
                   const Icon(FontAwesomeIcons.map, size: 12),
-                  DaSpacer.horizontal(space: Space.small),
+                  Gap.w4,
                   Text(location),
                 ],
               ),
               Row(
                 children: [
                   const Icon(FontAwesomeIcons.star, size: 12),
-                  DaSpacer.horizontal(space: Space.small),
+                  Gap.w4,
                   Text(rating),
                 ],
               ),
