@@ -41,95 +41,49 @@ class RestaurantListPage extends StatelessWidget {
             ),
             watchSearch.searchController.text.isNotEmpty
                 ? Expanded(
-                    child: watchSearch.result?.restaurants.isEmpty ?? true
-                        ? Center(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.warning_amber_rounded,
-                                    size: 72,
-                                  ),
-                                  Gap.h4,
-                                  Text(
-                                    'There is no restaurant named "${watchSearch.searchController.text}"',
-                                    style: const TextStyle(fontSize: 16),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
+                    child: Consumer<RestaurantSearchProvider>(
+                      builder: (context, state, _) {
+                        if (state.state == DataState.loading) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: violet500,
                             ),
-                          )
-                        : Consumer<RestaurantSearchProvider>(
-                            builder: (context, state, _) {
-                              if (state.state == DataState.loading) {
-                                return const Center(
-                                  child: CircularProgressIndicator(
-                                    color: Colors.deepPurple,
-                                  ),
-                                );
-                              } else if (state.state == DataState.hasData) {
-                                final restaurants =
-                                    state.result?.restaurants ?? [];
+                          );
+                        } else if (state.state == DataState.hasData) {
+                          final restaurants = state.result?.restaurants ?? [];
 
-                                return ListView.builder(
-                                  itemCount: restaurants.length,
-                                  itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          RestaurantDetailPage.routeName,
-                                          arguments: restaurants[index]
-                                              .id, // Pass the restaurant to detail page
-                                        );
-                                      },
-                                      child: RestaurantCard(
-                                        pictureId: restaurants[index].pictureId,
-                                        restaurantName: restaurants[index].name,
-                                        location: restaurants[index].city,
-                                        rating: restaurants[index]
-                                            .rating
-                                            .toString(),
-                                      ),
-                                    );
-                                  },
-                                );
-                              } else if (state.state == DataState.noData) {
-                                return const Center(
-                                  child: Text("No Data Found!"),
-                                );
-                              } else if (state.state == DataState.error) {
-                                return Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                        "There is an error while load data!"),
-                                    Gap.h12,
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        readList.fetchRestaurantList();
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                      ),
-                                      child: const Text('Refresh Data'),
-                                    )
-                                  ],
-                                );
-                              } else {
-                                return const Center(
-                                  child: Text("Failed to Load Data!"),
-                                );
-                              }
-                            },
-                          ),
+                          return RestaurantListView(restaurants: restaurants);
+                        } else if (state.state == DataState.noData) {
+                          return SearchWarning(
+                            text:
+                                'Restaurant named "${watchSearch.searchController.text} not found!"',
+                          );
+                        } else if (state.state == DataState.error) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("There is an error while load data!"),
+                              Gap.h12,
+                              ElevatedButton(
+                                onPressed: () {
+                                  readList.fetchRestaurantList();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                child: const Text('Refresh Data'),
+                              )
+                            ],
+                          );
+                        } else {
+                          return const Center(
+                            child: Text("Failed to Load Data!"),
+                          );
+                        }
+                      },
+                    ),
                   )
                 : Expanded(
                     child: Consumer<GetRestaurantListProvider>(
@@ -137,36 +91,16 @@ class RestaurantListPage extends StatelessWidget {
                         if (state.state == DataState.loading) {
                           return const Center(
                             child: CircularProgressIndicator(
-                              color: Colors.deepPurple,
+                              color: violet500,
                             ),
                           );
                         } else if (state.state == DataState.hasData) {
                           final restaurants = state.result!.restaurants;
 
-                          return ListView.builder(
-                            itemCount: restaurants.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    RestaurantDetailPage.routeName,
-                                    arguments: restaurants[index]
-                                        .id, // Pass the restaurant to detail page
-                                  );
-                                },
-                                child: RestaurantCard(
-                                  pictureId: restaurants[index].pictureId,
-                                  restaurantName: restaurants[index].name,
-                                  location: restaurants[index].city,
-                                  rating: restaurants[index].rating.toString(),
-                                ),
-                              );
-                            },
-                          );
+                          return RestaurantListView(restaurants: restaurants);
                         } else if (state.state == DataState.noData) {
                           return const Center(
-                            child: Text("No Data Found!"),
+                            child: Text("There is no registered restaurant!"),
                           );
                         } else if (state.state == DataState.error) {
                           return Column(
