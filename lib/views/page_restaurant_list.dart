@@ -16,27 +16,29 @@ class RestaurantListPage extends StatelessWidget {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(12.0, 16.0, 12.0, 8.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            Gap.h12,
-            TextField(
-              controller: watchSearch.searchController,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 8.0),
-                hintText: "Search Restaurant",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(12.0),
+            Gap.h24,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: TextField(
+                controller: watchSearch.searchController,
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(vertical: 4.0),
+                  hintText: "Search Restaurant",
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12.0),
+                    ),
                   ),
                 ),
+                onChanged: (value) {
+                  readSearch.fetchRestaurantSearchResult(value);
+                },
               ),
-              onChanged: (value) {
-                readSearch.fetchRestaurantSearchResult(value);
-              },
             ),
-            Gap.h12,
             watchSearch.searchController.text.isNotEmpty
                 ? Expanded(
                     child: watchSearch.result?.restaurants.isEmpty ?? true
