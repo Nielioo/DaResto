@@ -7,6 +7,30 @@ class RestaurantFavoritePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            Gap.h24,
+            Expanded(
+              child: Consumer<DatabaseProvider>(
+                builder: (context, state, _) {
+                  if (state.getAllFavoriteRestaurant().isEmpty) {
+                    return const SearchWarning(
+                      text: 'You don\'t have any favorite restaurant yet!',
+                    );
+                  } else {
+                    final restaurants = state.getAllFavoriteRestaurant();
+
+                    return RestaurantListView(restaurants: restaurants);
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -12,9 +12,6 @@ class RestaurantCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final readDatabase = context.read<DatabaseProvider>();
 
-    final isFavorite =
-        readDatabase.isFavoriteRestaurantExist(restaurantId: restaurant.id);
-
     return Card(
       child: Row(
         children: [
@@ -60,32 +57,35 @@ class RestaurantCard extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
-            icon: Icon(
-              readDatabase.isFavoriteRestaurantExist(
-                      restaurantId: restaurant.id)
-                  ? Icons.favorite
-                  : Icons.favorite_border,
-              color: Colors.red,
-            ),
-            onPressed: () async {
-              ScaffoldMessenger.of(context).clearSnackBars();
-              if (isFavorite) {
-                readDatabase.deleteFavoriteRestaurant(
-                    restaurantId: restaurant.id);
-                const snackBar = SnackBar(
-                  content: Text('Removed from favorite'),
-                  backgroundColor: Colors.red,
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              } else {
-                readDatabase.saveFavoriteRestaurant(restaurant: restaurant);
-                const snackBar = SnackBar(
-                  content: Text('Added to favorite'),
-                  backgroundColor: violet500,
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              }
+          Consumer<DatabaseProvider>(
+            builder: (context, state, _) {
+              return IconButton(
+                icon: Icon(
+                  state.isFavoriteRestaurantExist(restaurantId: restaurant.id)
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                  color: Colors.red,
+                ),
+                onPressed: () async {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  if (state.isFavoriteRestaurantExist(
+                      restaurantId: restaurant.id)) {
+                    state.deleteFavoriteRestaurant(restaurantId: restaurant.id);
+                    const snackBar = SnackBar(
+                      content: Text('Removed from favorite'),
+                      backgroundColor: Colors.red,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  } else {
+                    state.saveFavoriteRestaurant(restaurant: restaurant);
+                    const snackBar = SnackBar(
+                      content: Text('Added to favorite'),
+                      backgroundColor: violet500,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+              );
             },
           ),
           Gap.w4,
