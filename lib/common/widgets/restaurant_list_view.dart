@@ -20,10 +20,7 @@ class RestaurantListView extends StatelessWidget {
             );
           },
           child: RestaurantCard(
-            pictureId: restaurants[index].pictureId,
-            restaurantName: restaurants[index].name,
-            location: restaurants[index].city,
-            rating: restaurants[index].rating.toString(),
+            restaurant: restaurants[index],
           ),
         );
       },

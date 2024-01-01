@@ -37,6 +37,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   http: ^1.1.2
   provider: ^6.1.1
+  hive_flutter: ^1.1.0
 
 flutter_launcher_icons:
   image_path: "assets/images/daresto_logo.png"

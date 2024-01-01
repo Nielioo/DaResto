@@ -1,21 +1,20 @@
 part of 'widgets.dart';
 
 class RestaurantCard extends StatelessWidget {
-  final String pictureId;
-  final String restaurantName;
-  final String location;
-  final String rating;
+  final RestaurantList restaurant;
 
   const RestaurantCard({
     super.key,
-    required this.pictureId,
-    required this.restaurantName,
-    required this.location,
-    required this.rating,
+    required this.restaurant,
   });
 
   @override
   Widget build(BuildContext context) {
+    final readDatabase = context.read<DatabaseProvider>();
+
+    final isFavorite =
+        readDatabase.isFavoriteRestaurantExist(restaurantId: restaurant.id);
+
     return Card(
       child: Row(
         children: [
@@ -24,9 +23,9 @@ class RestaurantCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Hero(
-                tag: 'restaurantImage$pictureId',
+                tag: 'restaurantImage${restaurant.pictureId}',
                 child: Image.network(
-                  '${Const.baseUrl}/images/large/$pictureId',
+                  '${Const.baseUrl}/images/large/${restaurant.pictureId}',
                   width: MediaQuery.of(context).size.width * 0.3,
                   height: MediaQuery.of(context).size.height * 0.1,
                   fit: BoxFit.cover,
@@ -35,30 +34,61 @@ class RestaurantCard extends StatelessWidget {
             ),
           ),
           Gap.w12,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                restaurantName,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              Row(
-                children: [
-                  const Icon(FontAwesomeIcons.map, size: 12),
-                  Gap.w4,
-                  Text(location),
-                ],
-              ),
-              Row(
-                children: [
-                  const Icon(FontAwesomeIcons.star, size: 12),
-                  Gap.w4,
-                  Text(rating),
-                ],
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  restaurant.name,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  children: [
+                    const Icon(FontAwesomeIcons.map, size: 12),
+                    Gap.w4,
+                    Text(restaurant.city),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Icon(FontAwesomeIcons.star, size: 12),
+                    Gap.w4,
+                    Text(restaurant.rating.toString()),
+                  ],
+                ),
+              ],
+            ),
           ),
+          IconButton(
+            icon: Icon(
+              readDatabase.isFavoriteRestaurantExist(
+                      restaurantId: restaurant.id)
+                  ? Icons.favorite
+                  : Icons.favorite_border,
+              color: Colors.red,
+            ),
+            onPressed: () async {
+              ScaffoldMessenger.of(context).clearSnackBars();
+              if (isFavorite) {
+                readDatabase.deleteFavoriteRestaurant(
+                    restaurantId: restaurant.id);
+                const snackBar = SnackBar(
+                  content: Text('Removed from favorite'),
+                  backgroundColor: Colors.red,
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              } else {
+                readDatabase.saveFavoriteRestaurant(restaurant: restaurant);
+                const snackBar = SnackBar(
+                  content: Text('Added to favorite'),
+                  backgroundColor: violet500,
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+            },
+          ),
+          Gap.w4,
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:daresto/providers/providers.dart';
@@ -6,7 +7,9 @@ import 'package:daresto/views/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
+  await Hive.initFlutter();
+  await HiveHelper.init();
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(MyApp());
@@ -22,6 +25,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => DatabaseProvider(),
+        ),
         ChangeNotifierProvider(
           create: (_) => GetRestaurantListProvider(
             restaurantApiService: restaurantService,
