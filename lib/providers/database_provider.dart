@@ -3,17 +3,18 @@ part of 'providers.dart';
 class DatabaseProvider extends ChangeNotifier {
   void saveFavoriteRestaurant({required RestaurantList restaurant}) async {
     final hiveRestaurant = Hive.box<String>(Const.hiveFavoriteRestaurantBox);
-    final restaurantJson = restaurant.toJson();
-    await hiveRestaurant.put(restaurant.id, restaurantJson as String);
+    final restaurantJson = jsonEncode(restaurant);
+    await hiveRestaurant.put(restaurant.id, restaurantJson);
     notifyListeners();
   }
 
   List<RestaurantList> getAllFavoriteRestaurant() {
     final hiveRestaurant = Hive.box<String>(Const.hiveFavoriteRestaurantBox);
-    notifyListeners();
-    return hiveRestaurant.values
-        .map((item) => RestaurantList.fromJson(item as Map<String, dynamic>))
+    final values = hiveRestaurant.values
+        .map((item) => RestaurantList.fromJson(jsonDecode(item)))
         .toList();
+    notifyListeners();
+    return values;
   }
 
   void deleteFavoriteRestaurant({required String restaurantId}) async {
@@ -24,7 +25,8 @@ class DatabaseProvider extends ChangeNotifier {
 
   bool isFavoriteRestaurantExist({required String restaurantId}) {
     final hiveRestaurant = Hive.box<String>(Const.hiveFavoriteRestaurantBox);
+    final values = hiveRestaurant.containsKey(restaurantId);
     notifyListeners();
-    return hiveRestaurant.containsKey(restaurantId);
+    return values;
   }
 }

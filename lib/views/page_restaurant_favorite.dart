@@ -13,21 +13,13 @@ class RestaurantFavoritePage extends StatelessWidget {
         child: Column(
           children: [
             Gap.h24,
-            Expanded(
-              child: Consumer<DatabaseProvider>(
-                builder: (context, state, _) {
-                  if (state.getAllFavoriteRestaurant().isEmpty) {
-                    return const SearchWarning(
-                      text: 'You don\'t have any favorite restaurant yet!',
-                    );
-                  } else {
-                    final restaurants = state.getAllFavoriteRestaurant();
-
-                    return RestaurantListView(restaurants: restaurants);
-                  }
-                },
-              ),
-            ),
+            Expanded(child: Consumer<DatabaseProvider>(
+              builder: (context, databaseProvider, _) {
+                final favoriteRestaurants =
+                    databaseProvider.getAllFavoriteRestaurant();
+                return RestaurantListView(restaurants: favoriteRestaurants);
+              },
+            )),
           ],
         ),
       ),

@@ -10,6 +10,9 @@ class RestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Listen variable changes, best for calling variable
+    final watchDatabase = context.watch<DatabaseProvider>();
+
     // Only read variable, not for listen changes, best for calling function
     final readDatabase = context.read<DatabaseProvider>();
 
@@ -62,16 +65,18 @@ class RestaurantCard extends StatelessWidget {
             builder: (context, state, _) {
               return IconButton(
                 icon: Icon(
-                  state.isFavoriteRestaurantExist(restaurantId: restaurant.id)
+                  watchDatabase.isFavoriteRestaurantExist(
+                          restaurantId: restaurant.id)
                       ? Icons.favorite
                       : Icons.favorite_border,
                   color: Colors.red,
                 ),
                 onPressed: () async {
                   ScaffoldMessenger.of(context).clearSnackBars();
-                  if (state.isFavoriteRestaurantExist(
+                  if (watchDatabase.isFavoriteRestaurantExist(
                       restaurantId: restaurant.id)) {
-                    readDatabase.deleteFavoriteRestaurant(restaurantId: restaurant.id);
+                    readDatabase.deleteFavoriteRestaurant(
+                        restaurantId: restaurant.id);
                     const snackBar = SnackBar(
                       content: Text('Removed from favorite'),
                       backgroundColor: Colors.red,
