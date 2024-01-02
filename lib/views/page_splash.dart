@@ -14,7 +14,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacementNamed(context, HomePage.routeName);
     });
   }
@@ -29,18 +29,20 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: violet400,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/daresto_logo.png',
+            Image.asset('assets/images/daresto_logo_transparent.png',
                 width: 80, fit: BoxFit.cover),
             Gap.h12,
-            const Text('DaResto',
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepPurple)),
+            Text(
+              'DaResto',
+              style: Style.headline1.copyWith(
+                color: Colors.white,
+              ),
+            ),
           ],
         ),
       ),
