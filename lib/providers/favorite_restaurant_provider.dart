@@ -32,7 +32,7 @@ class FavoriteRestaurantProvider extends ChangeNotifier {
       _state = DataState.hasData;
       final values = hiveRestaurant.values
           .map((item) => RestaurantList.fromJson(jsonDecode(item)))
-          .where((restaurant) => restaurant.name.contains(query))
+          .where((restaurant) => restaurant.name.toLowerCase().contains(query.toLowerCase()))
           .toList();
       notifyListeners();
       return values;
