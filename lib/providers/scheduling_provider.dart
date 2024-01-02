@@ -5,6 +5,12 @@ class SchedulingProvider extends ChangeNotifier {
 
   bool get isScheduled => _isScheduled;
 
+  SchedulingProvider() {
+    _isScheduled =
+        Hive.box<bool>(Const.hiveScheduleBox).get('isScheduled') ?? false;
+    notifyListeners();
+  }
+
   Future<bool> scheduledRestaurant(bool value) async {
     _isScheduled = value;
     if (_isScheduled) {
@@ -21,9 +27,5 @@ class SchedulingProvider extends ChangeNotifier {
       notifyListeners();
       return await AndroidAlarmManager.cancel(1);
     }
-  }
-
-  void testNotification() {
-    BackgroundService.callback();
   }
 }

@@ -9,6 +9,7 @@ import 'package:rxdart/subjects.dart';
 
 part 'const.dart';
 part 'data_state.dart';
+part 'value_converter.dart';
 
 part 'helpers/notification_helper.dart';
 part 'helpers/date_time_helper.dart';

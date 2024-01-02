@@ -6,7 +6,7 @@ import 'package:daresto/providers/providers.dart';
 import 'package:daresto/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 part 'page_add_review.dart';

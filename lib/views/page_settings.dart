@@ -23,7 +23,7 @@ class SettingsPage extends StatelessWidget {
               Gap.h20,
               ListTile(
                 title: Text(
-                  'Daily Restaurant Reminder',
+                  'Daily Restaurant Notification',
                   style: Style.text1,
                 ),
                 trailing: Consumer<SchedulingProvider>(
@@ -32,6 +32,8 @@ class SettingsPage extends StatelessWidget {
                       value: provider.isScheduled,
                       onChanged: (value) async {
                         await provider.scheduledRestaurant(value);
+                        final hiveSchedule = Hive.box<bool>(Const.hiveScheduleBox);
+                        await hiveSchedule.put('isScheduled', value);
                       },
                     );
                   },
