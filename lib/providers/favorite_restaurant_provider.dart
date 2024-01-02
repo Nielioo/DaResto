@@ -7,52 +7,54 @@ class FavoriteRestaurantProvider extends ChangeNotifier {
   DataState? _state;
   DataState? get state => _state;
 
-  final ValueNotifier<List<RestaurantList>> searchedFavoriteRestaurants =
-      ValueNotifier([]);
+  List<RestaurantList> restaurantFavoriteList = [];
+
+  List<RestaurantList> searchedFavoriteRestaurants = [];
 
   void saveFavoriteRestaurant({required RestaurantList restaurant}) async {
     final hiveRestaurant = Hive.box<String>(Const.hiveFavoriteRestaurantBox);
     final restaurantJson = jsonEncode(restaurant);
     await hiveRestaurant.put(restaurant.id, restaurantJson);
+    getAllFavoriteRestaurant();
     notifyListeners();
   }
 
-  List<RestaurantList> getAllFavoriteRestaurant() {
+  void getAllFavoriteRestaurant() {
     final hiveRestaurant = Hive.box<String>(Const.hiveFavoriteRestaurantBox);
-    final values = hiveRestaurant.values
+    restaurantFavoriteList = hiveRestaurant.values
         .map((item) => RestaurantList.fromJson(jsonDecode(item)))
         .toList();
     notifyListeners();
-    return values;
   }
 
-  List<RestaurantList> getFavoriteRestaurantByQuery(String query) {
+  void getFavoriteRestaurantByQuery(String query) {
     final hiveRestaurant = Hive.box<String>(Const.hiveFavoriteRestaurantBox);
     if (hiveRestaurant.values.isNotEmpty) {
       _state = DataState.hasData;
       final values = hiveRestaurant.values
           .map((item) => RestaurantList.fromJson(jsonDecode(item)))
-          .where((restaurant) => restaurant.name.toLowerCase().contains(query.toLowerCase()))
+          .where((restaurant) =>
+              restaurant.name.toLowerCase().contains(query.toLowerCase()))
           .toList();
+      searchedFavoriteRestaurants = values;
       notifyListeners();
-      return values;
     } else {
       _state = DataState.noData;
+      searchedFavoriteRestaurants = [];
       notifyListeners();
-      return [];
     }
   }
 
   void deleteFavoriteRestaurant({required String restaurantId}) async {
     final hiveRestaurant = Hive.box<String>(Const.hiveFavoriteRestaurantBox);
     await hiveRestaurant.delete(restaurantId);
+    getAllFavoriteRestaurant();
     notifyListeners();
   }
 
   bool isFavoriteRestaurantExist({required String restaurantId}) {
     final hiveRestaurant = Hive.box<String>(Const.hiveFavoriteRestaurantBox);
     final values = hiveRestaurant.containsKey(restaurantId);
-    notifyListeners();
     return values;
   }
 }

@@ -1,18 +1,32 @@
 part of 'pages.dart';
 
-class RestaurantFavoritePage extends StatelessWidget {
+class RestaurantFavoritePage extends StatefulWidget {
   static const String routeName = '/restaurant-favorite';
-
   const RestaurantFavoritePage({super.key});
 
   @override
+  State<RestaurantFavoritePage> createState() => _RestaurantFavoritePageState();
+}
+
+class _RestaurantFavoritePageState extends State<RestaurantFavoritePage> {
+  // Listen variable changes, best for calling variable
+  FavoriteRestaurantProvider get watchFavorite =>
+      context.watch<FavoriteRestaurantProvider>();
+
+  // Only read variable, not for listen changes, best for calling function
+  FavoriteRestaurantProvider get readFavorite =>
+      context.read<FavoriteRestaurantProvider>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      readFavorite.getAllFavoriteRestaurant();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Listen variable changes, best for calling variable
-    final watchFavorite = context.watch<FavoriteRestaurantProvider>();
-
-    // Only read variable, not for listen changes, best for calling function
-    final readFavorite = context.read<FavoriteRestaurantProvider>();
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -34,19 +48,19 @@ class RestaurantFavoritePage extends StatelessWidget {
                   ),
                 ),
                 onChanged: (value) {
-                  readFavorite.searchedFavoriteRestaurants.value =
-                      readFavorite.getFavoriteRestaurantByQuery(value);
+                  readFavorite.getFavoriteRestaurantByQuery(value);
                 },
               ),
             ),
             watchFavorite.searchController.text.isNotEmpty
                 ? Expanded(
-                    child: ValueListenableBuilder<List<RestaurantList>>(
-                      valueListenable:
-                          watchFavorite.searchedFavoriteRestaurants,
-                      builder: (context, restaurants, _) {
-                        if (restaurants.isNotEmpty) {
-                          return RestaurantListView(restaurants: restaurants);
+                    child: Builder(
+                      builder: (context) {
+                        if (watchFavorite
+                            .searchedFavoriteRestaurants.isNotEmpty) {
+                          return RestaurantListView(
+                              restaurants:
+                                  watchFavorite.searchedFavoriteRestaurants);
                         } else {
                           return SearchWarning(
                             text:
@@ -59,11 +73,9 @@ class RestaurantFavoritePage extends StatelessWidget {
                 : Expanded(
                     child: Consumer<FavoriteRestaurantProvider>(
                       builder: (context, provider, _) {
-                        final favoriteRestaurants =
-                            provider.getAllFavoriteRestaurant();
-                        if (favoriteRestaurants.isNotEmpty) {
+                        if (watchFavorite.restaurantFavoriteList.isNotEmpty) {
                           return RestaurantListView(
-                              restaurants: favoriteRestaurants);
+                              restaurants: watchFavorite.restaurantFavoriteList);
                         } else {
                           return const SearchWarning(
                             text: 'You don\'t have any favorite restaurant yet',
