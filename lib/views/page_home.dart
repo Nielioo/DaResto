@@ -11,16 +11,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _bottomNavIndex = 0;
+  final NotificationHelper notificationHelper = NotificationHelper();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    notificationHelper.initNotifications(flutterLocalNotificationsPlugin);
+    notificationHelper.configureSelectNotificationSubject(
+        context, HomePage.routeName);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    selectNotificationSubject.close();
     super.dispose();
   }
 
@@ -30,7 +33,7 @@ class _HomePageState extends State<HomePage> {
       body: _bottomNavIndex == 0
           ? const RestaurantListPage()
           : _bottomNavIndex == 1
-              ? RestaurantFavoritePage()
+              ? const RestaurantFavoritePage()
               : const SettingsPage(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomNavIndex,

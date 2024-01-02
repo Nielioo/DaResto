@@ -38,6 +38,11 @@ dependencies:
   http: ^1.1.2
   provider: ^6.1.1
   hive_flutter: ^1.1.0
+  intl: ^0.19.0
+  flutter_local_notifications: ^16.3.0
+  android_alarm_manager_plus: ^3.0.4
+  rxdart: ^0.27.7
+
 
 flutter_launcher_icons:
   image_path: "assets/images/daresto_logo.png"
