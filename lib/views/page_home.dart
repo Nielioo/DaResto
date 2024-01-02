@@ -38,6 +38,9 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomNavIndex,
         selectedItemColor: violet500,
+        unselectedItemColor: Colors.grey[500],
+        selectedLabelStyle: Style.text2,
+        unselectedLabelStyle: Style.text2,
         onTap: (value) {
           setState(() {
             _bottomNavIndex = value;
@@ -49,9 +52,13 @@ class _HomePageState extends State<HomePage> {
             label: 'List',
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favorite'),
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Settings'),
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
         ],
       ),
     );

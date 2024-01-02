@@ -16,13 +16,13 @@ class MenuCard extends StatelessWidget {
           children: [
             Image.asset(
               imagePath,
-              width: MediaQuery.of(context).size.width * 0.2,
+              width: Size.screenWidth(context) * 0.2,
               fit: BoxFit.cover,
             ),
             Gap.h12,
             Text(
               title,
-              style: Theme.of(context).textTheme.labelSmall,
+              style: Style.text2.copyWith(fontWeight: FontWeight.bold),
             ),
           ],
         ),

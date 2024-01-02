@@ -23,18 +23,19 @@ class CustomerReviewCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  name,
-                  style: Theme.of(context).textTheme.labelMedium,
+                  name.length > 20 ? name.substring(0, 20) + '...' : name,
+                  style: Style.text2.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
                   date,
-                  style: Theme.of(context).textTheme.labelMedium,
+                  style: Style.text2.copyWith(fontWeight: FontWeight.bold,color: Colors.black54),
                 ),
               ],
             ),
+            Gap.h4,
             Text(
               review,
-              style: Theme.of(context).textTheme.bodySmall,
+              style: Style.subText1,
             ),
           ],
         ),

@@ -14,10 +14,10 @@ class SearchWarning extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Lottie.asset('assets/lottie/not_found.json', width: 200),
-            Gap.h4,
+            Gap.h8,
             Text(
               text,
-              style: const TextStyle(fontSize: 16),
+              style: Style.text1.copyWith(fontWeight: FontWeight.bold, color: Colors.black54),
               textAlign: TextAlign.center,
             ),
           ],

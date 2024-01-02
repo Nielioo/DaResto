@@ -27,8 +27,8 @@ class RestaurantCard extends StatelessWidget {
                 tag: 'restaurantImage${restaurant.pictureId}',
                 child: Image.network(
                   '${Const.baseUrl}/images/large/${restaurant.pictureId}',
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  height: MediaQuery.of(context).size.height * 0.1,
+                  width: Size.screenWidth(context) * 0.3,
+                  height: Size.screenHeight(context) * 0.1,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -41,21 +41,22 @@ class RestaurantCard extends StatelessWidget {
               children: [
                 Text(
                   restaurant.name,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                  style: Style.headline3.copyWith(fontWeight: FontWeight.bold),
                 ),
+                Gap.h4,
                 Row(
                   children: [
-                    const Icon(FontAwesomeIcons.map, size: 12),
+                    const Icon(Icons.location_pin, size: 16),
                     Gap.w4,
-                    Text(restaurant.city),
+                    Text(restaurant.city, style: Style.text2,),
                   ],
                 ),
+                Gap.h4,
                 Row(
                   children: [
-                    const Icon(FontAwesomeIcons.star, size: 12),
+                    const Icon(Icons.stars_rounded, size: 16),
                     Gap.w4,
-                    Text(restaurant.rating.toString()),
+                    Text(restaurant.rating.toString(), style: Style.text2,),
                   ],
                 ),
               ],

@@ -27,7 +27,10 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Restaurant Detail'),
+        title: Text(
+          'Restaurant Detail',
+          style: Style.headline2,
+        ),
       ),
       body: SingleChildScrollView(
         child: Consumer<GetRestaurantDetailProvider>(
@@ -55,41 +58,46 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                       children: [
                         Text(
                           restaurant.name,
-                          style: const TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
+                          style: Style.headline2,
                         ),
                         Gap.h4,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(
-                              FontAwesomeIcons.map,
-                              size: MediaQuery.of(context).size.height * 0.02,
+                              Icons.location_pin,
+                              size: Size.screenHeight(context) * 0.02,
                             ),
                             Gap.w4,
-                            Text(restaurant.city),
+                            Text(
+                              restaurant.city,
+                              style: Style.text1,
+                            ),
                             Gap.w12,
                             Icon(
-                              FontAwesomeIcons.star,
-                              size: MediaQuery.of(context).size.height * 0.02,
+                              Icons.stars_rounded,
+                              size: Size.screenHeight(context) * 0.02,
                             ),
                             Gap.w4,
-                            Text(restaurant.rating.toString()),
+                            Text(
+                              restaurant.rating.toString(),
+                              style: Style.text1,
+                            ),
                           ],
                         ),
                         Gap.h12,
-                        Text(
-                          restaurant.description,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
+                        ExpandableText(
+                            text: restaurant.description,
+                            maxLines: 5,
+                            style: Style.subText1),
                         Gap.h12,
                         Text(
                           'Foods',
-                          style: Theme.of(context).textTheme.headlineSmall,
+                          style: Style.headline2,
                         ),
                         Gap.h4,
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.20,
+                          height: Size.screenHeight(context) * 0.20,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: restaurant.menus.foods.length,
@@ -103,11 +111,11 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                         Gap.h12,
                         Text(
                           'Drinks',
-                          style: Theme.of(context).textTheme.headlineSmall,
+                          style: Style.headline2,
                         ),
                         Gap.h4,
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.20,
+                          height: Size.screenHeight(context) * 0.20,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: restaurant.menus.drinks.length,
@@ -124,7 +132,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                           children: [
                             Text(
                               'Review',
-                              style: Theme.of(context).textTheme.headlineSmall,
+                              style: Style.headline2,
                             ),
                             IconButton(
                               icon: const Icon(Icons.add_circle_rounded),
@@ -149,7 +157,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                         ),
                         Gap.h4,
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.5,
+                          height: Size.screenHeight(context) * 0.5,
                           child: ListView.builder(
                             scrollDirection: Axis.vertical,
                             itemCount: restaurant.customerReviews.length,
