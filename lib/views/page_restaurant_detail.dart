@@ -95,7 +95,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                             itemCount: restaurant.menus.foods.length,
                             itemBuilder: (context, index) {
                               return MenuCard(
-                                  imagePath: 'assets/food_dummy.jpg',
+                                  imagePath: 'assets/images/food_dummy.png',
                                   title: restaurant.menus.foods[index].name);
                             },
                           ),
@@ -113,7 +113,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                             itemCount: restaurant.menus.drinks.length,
                             itemBuilder: (context, index) {
                               return MenuCard(
-                                  imagePath: 'assets/drink_dummy.png',
+                                  imagePath: 'assets/images/drink_dummy.png',
                                   title: restaurant.menus.drinks[index].name);
                             },
                           ),

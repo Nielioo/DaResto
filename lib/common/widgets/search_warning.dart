@@ -13,10 +13,7 @@ class SearchWarning extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.warning_rounded,
-              size: 72,
-            ),
+            Lottie.asset('assets/lottie/not_found.json', width: 200),
             Gap.h4,
             Text(
               text,

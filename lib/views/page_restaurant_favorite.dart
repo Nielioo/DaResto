@@ -54,8 +54,14 @@ class RestaurantFavoritePage extends StatelessWidget {
                       builder: (context, provider, _) {
                         final favoriteRestaurants =
                             provider.getAllFavoriteRestaurant();
-                        return RestaurantListView(
-                            restaurants: favoriteRestaurants);
+                        if (favoriteRestaurants.isNotEmpty) {
+                          return RestaurantListView(
+                              restaurants: favoriteRestaurants);
+                        } else {
+                          return const SearchWarning(
+                            text: 'You don\'t have any favorite restaurant yet',
+                          );
+                        }
                       },
                     ),
                   )

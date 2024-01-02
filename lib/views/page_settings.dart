@@ -16,10 +16,16 @@ class SettingsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Gap.h20,
-              const Text('Settings'),
+              Text(
+                'Settings',
+                style: Style.headline1,
+              ),
               Gap.h20,
               ListTile(
-                title: const Text('Daily Restaurant Reminder'),
+                title: Text(
+                  'Daily Restaurant Reminder',
+                  style: Style.text1,
+                ),
                 trailing: Consumer<SchedulingProvider>(
                   builder: (context, provider, _) {
                     return Switch.adaptive(
