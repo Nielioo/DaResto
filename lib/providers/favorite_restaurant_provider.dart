@@ -4,6 +4,9 @@ class FavoriteRestaurantProvider extends ChangeNotifier {
   final TextEditingController _searchController = TextEditingController();
   TextEditingController get searchController => _searchController;
 
+  DataState? _state;
+  DataState? get state => _state;
+
   final ValueNotifier<List<RestaurantList>> searchedFavoriteRestaurants =
       ValueNotifier([]);
 
@@ -25,12 +28,19 @@ class FavoriteRestaurantProvider extends ChangeNotifier {
 
   List<RestaurantList> getFavoriteRestaurantByQuery(String query) {
     final hiveRestaurant = Hive.box<String>(Const.hiveFavoriteRestaurantBox);
-    final values = hiveRestaurant.values
-        .map((item) => RestaurantList.fromJson(jsonDecode(item)))
-        .where((restaurant) => restaurant.name.contains(query))
-        .toList();
-    notifyListeners();
-    return values;
+    if (hiveRestaurant.values.isNotEmpty) {
+      _state = DataState.hasData;
+      final values = hiveRestaurant.values
+          .map((item) => RestaurantList.fromJson(jsonDecode(item)))
+          .where((restaurant) => restaurant.name.contains(query))
+          .toList();
+      notifyListeners();
+      return values;
+    } else {
+      _state = DataState.noData;
+      notifyListeners();
+      return [];
+    }
   }
 
   void deleteFavoriteRestaurant({required String restaurantId}) async {

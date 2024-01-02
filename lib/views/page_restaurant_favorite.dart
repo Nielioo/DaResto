@@ -45,7 +45,16 @@ class RestaurantFavoritePage extends StatelessWidget {
                       valueListenable:
                           watchFavorite.searchedFavoriteRestaurants,
                       builder: (context, restaurants, _) {
-                        return RestaurantListView(restaurants: restaurants);
+                        if (restaurants.isNotEmpty) {
+                          // TODO: This result is not working properly
+                          return RestaurantListView(restaurants: restaurants);
+                        } else {
+                          // TODO: This warning is not showing
+                          return SearchWarning(
+                            text:
+                                'You don\'t have any favorite restaurant named ${watchFavorite.searchController.text}',
+                          );
+                        }
                       },
                     ),
                   )
