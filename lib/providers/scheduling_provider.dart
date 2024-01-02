@@ -28,4 +28,10 @@ class SchedulingProvider extends ChangeNotifier {
       return await AndroidAlarmManager.cancel(1);
     }
   }
+
+  void saveScheduleSetting(bool value) async {
+    final hiveSchedule = Hive.box<bool>(Const.hiveScheduleBox);
+    await hiveSchedule.put('isScheduled', value);
+    notifyListeners();
+  }
 }

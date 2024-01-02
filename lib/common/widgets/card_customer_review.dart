@@ -23,7 +23,7 @@ class CustomerReviewCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  name.length > 20 ? name.substring(0, 20) + '...' : name,
+                  name.length > 20 ? '${name.substring(0, 20)}...' : name,
                   style: Style.text2.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(

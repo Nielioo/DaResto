@@ -32,8 +32,7 @@ class SettingsPage extends StatelessWidget {
                       value: provider.isScheduled,
                       onChanged: (value) async {
                         await provider.scheduledRestaurant(value);
-                        final hiveSchedule = Hive.box<bool>(Const.hiveScheduleBox);
-                        await hiveSchedule.put('isScheduled', value);
+                        provider.saveScheduleSetting(value);
                       },
                     );
                   },
