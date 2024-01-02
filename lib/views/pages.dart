@@ -1,5 +1,6 @@
 import 'package:daresto/common/widgets/widgets.dart';
 import 'package:daresto/core/themes/themes.dart';
+import 'package:daresto/models/models.dart';
 import 'package:daresto/providers/providers.dart';
 import 'package:daresto/shared/shared.dart';
 import 'package:flutter/material.dart';

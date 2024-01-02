@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => DatabaseProvider(),
+          create: (_) => FavoriteRestaurantProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => GetRestaurantListProvider(
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
               SplashPage.routeName: (context) => const SplashPage(),
               HomePage.routeName: (context) => const HomePage(),
               RestaurantListPage.routeName: (context) => const RestaurantListPage(),
-              RestaurantFavoritePage.routeName: (context) => const RestaurantFavoritePage(),
+              RestaurantFavoritePage.routeName: (context) => RestaurantFavoritePage(),
               SettingsPage.routeName: (context) => const SettingsPage(),
               RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
                     id: ModalRoute.of(context)?.settings.arguments as String,

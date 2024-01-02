@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
       body: _bottomNavIndex == 0
           ? const RestaurantListPage()
           : _bottomNavIndex == 1
-              ? const RestaurantFavoritePage()
+              ? RestaurantFavoritePage()
               : const SettingsPage(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomNavIndex,

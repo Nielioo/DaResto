@@ -11,10 +11,10 @@ class RestaurantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Listen variable changes, best for calling variable
-    final watchDatabase = context.watch<DatabaseProvider>();
+    final watchFavorite = context.watch<FavoriteRestaurantProvider>();
 
     // Only read variable, not for listen changes, best for calling function
-    final readDatabase = context.read<DatabaseProvider>();
+    final readFavorite = context.read<FavoriteRestaurantProvider>();
 
     return Card(
       child: Row(
@@ -61,11 +61,11 @@ class RestaurantCard extends StatelessWidget {
               ],
             ),
           ),
-          Consumer<DatabaseProvider>(
+          Consumer<FavoriteRestaurantProvider>(
             builder: (context, state, _) {
               return IconButton(
                 icon: Icon(
-                  watchDatabase.isFavoriteRestaurantExist(
+                  watchFavorite.isFavoriteRestaurantExist(
                           restaurantId: restaurant.id)
                       ? Icons.favorite
                       : Icons.favorite_border,
@@ -73,9 +73,9 @@ class RestaurantCard extends StatelessWidget {
                 ),
                 onPressed: () async {
                   ScaffoldMessenger.of(context).clearSnackBars();
-                  if (watchDatabase.isFavoriteRestaurantExist(
+                  if (watchFavorite.isFavoriteRestaurantExist(
                       restaurantId: restaurant.id)) {
-                    readDatabase.deleteFavoriteRestaurant(
+                    readFavorite.deleteFavoriteRestaurant(
                         restaurantId: restaurant.id);
                     const snackBar = SnackBar(
                       content: Text('Removed from favorite'),
@@ -83,7 +83,7 @@ class RestaurantCard extends StatelessWidget {
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   } else {
-                    readDatabase.saveFavoriteRestaurant(restaurant: restaurant);
+                    readFavorite.saveFavoriteRestaurant(restaurant: restaurant);
                     const snackBar = SnackBar(
                       content: Text('Added to favorite'),
                       backgroundColor: violet500,
