@@ -28,7 +28,10 @@ class CustomerReviewCard extends StatelessWidget {
                 ),
                 Text(
                   date,
-                  style: Style.text2.copyWith(fontWeight: FontWeight.bold,color: Colors.black54),
+                  style: Style.text2.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                  ),
                 ),
               ],
             ),

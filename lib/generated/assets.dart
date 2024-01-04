@@ -4,9 +4,9 @@ class Assets {
 
   static const String assetsLocalRestaurant = 'assets/local_restaurant.json';
   static const String imagesDarestoLogo = 'assets/images/daresto_logo.png';
-  static const String imagesDarestoLogoTransparent = 'assets/images/daresto_logo_transparent.png';
+  static const String imagesDarestoLogoTransparent =
+      'assets/images/daresto_logo_transparent.png';
   static const String imagesDrinkDummy = 'assets/images/drink_dummy.png';
   static const String imagesFoodDummy = 'assets/images/food_dummy.png';
   static const String lottieNotFound = 'assets/lottie/not_found.json';
-
 }

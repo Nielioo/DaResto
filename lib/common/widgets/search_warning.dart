@@ -17,7 +17,10 @@ class SearchWarning extends StatelessWidget {
             Gap.h8,
             Text(
               text,
-              style: Style.text1.copyWith(fontWeight: FontWeight.bold, color: Colors.black54),
+              style: Style.text1.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.black54,
+              ),
               textAlign: TextAlign.center,
             ),
           ],

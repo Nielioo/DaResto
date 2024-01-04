@@ -48,7 +48,10 @@ class RestaurantCard extends StatelessWidget {
                   children: [
                     const Icon(Icons.location_pin, size: 16),
                     Gap.w4,
-                    Text(restaurant.city, style: Style.text2,),
+                    Text(
+                      restaurant.city,
+                      style: Style.text2,
+                    ),
                   ],
                 ),
                 Gap.h4,
@@ -56,7 +59,10 @@ class RestaurantCard extends StatelessWidget {
                   children: [
                     const Icon(Icons.stars_rounded, size: 16),
                     Gap.w4,
-                    Text(restaurant.rating.toString(), style: Style.text2,),
+                    Text(
+                      restaurant.rating.toString(),
+                      style: Style.text2,
+                    ),
                   ],
                 ),
               ],

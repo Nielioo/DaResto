@@ -75,7 +75,8 @@ class _RestaurantFavoritePageState extends State<RestaurantFavoritePage> {
                       builder: (context, provider, _) {
                         if (watchFavorite.restaurantFavoriteList.isNotEmpty) {
                           return RestaurantListView(
-                              restaurants: watchFavorite.restaurantFavoriteList);
+                              restaurants:
+                                  watchFavorite.restaurantFavoriteList);
                         } else {
                           return const SearchWarning(
                             text: 'You don\'t have any favorite restaurant yet',

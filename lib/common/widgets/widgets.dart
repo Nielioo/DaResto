@@ -13,4 +13,3 @@ part 'card_restaurant.dart';
 part 'search_warning.dart';
 part 'restaurant_list_view.dart';
 part 'expandable_text.dart';
-
