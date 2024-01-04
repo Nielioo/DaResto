@@ -1,6 +1,6 @@
 part of 'themes.dart';
 
-class Sizes {
+class Size {
   static const p4 = 4.0;
   static const p8 = 8.0;
   static const p12 = 12.0;
@@ -41,36 +41,36 @@ class Sizes {
 
 class Gap {
   /// Gap widths
-  static const w4 = SizedBox(width: Sizes.p4);
-  static const w8 = SizedBox(width: Sizes.p8);
-  static const w12 = SizedBox(width: Sizes.p12);
-  static const w16 = SizedBox(width: Sizes.p16);
-  static const w20 = SizedBox(width: Sizes.p20);
-  static const w24 = SizedBox(width: Sizes.p24);
-  static const w28 = SizedBox(width: Sizes.p28);
-  static const w32 = SizedBox(width: Sizes.p32);
-  static const w36 = SizedBox(width: Sizes.p36);
-  static const w40 = SizedBox(width: Sizes.p40);
-  static const w48 = SizedBox(width: Sizes.p48);
-  static const w56 = SizedBox(width: Sizes.p56);
-  static const w64 = SizedBox(width: Sizes.p64);
-  static const w72 = SizedBox(width: Sizes.p72);
-  static const w80 = SizedBox(width: Sizes.p80);
+  static const w4 = SizedBox(width: Size.p4);
+  static const w8 = SizedBox(width: Size.p8);
+  static const w12 = SizedBox(width: Size.p12);
+  static const w16 = SizedBox(width: Size.p16);
+  static const w20 = SizedBox(width: Size.p20);
+  static const w24 = SizedBox(width: Size.p24);
+  static const w28 = SizedBox(width: Size.p28);
+  static const w32 = SizedBox(width: Size.p32);
+  static const w36 = SizedBox(width: Size.p36);
+  static const w40 = SizedBox(width: Size.p40);
+  static const w48 = SizedBox(width: Size.p48);
+  static const w56 = SizedBox(width: Size.p56);
+  static const w64 = SizedBox(width: Size.p64);
+  static const w72 = SizedBox(width: Size.p72);
+  static const w80 = SizedBox(width: Size.p80);
 
   /// Gap heights
-  static const h4 = SizedBox(height: Sizes.p4);
-  static const h8 = SizedBox(height: Sizes.p8);
-  static const h12 = SizedBox(height: Sizes.p12);
-  static const h16 = SizedBox(height: Sizes.p16);
-  static const h20 = SizedBox(height: Sizes.p20);
-  static const h24 = SizedBox(height: Sizes.p24);
-  static const h28 = SizedBox(height: Sizes.p28);
-  static const h32 = SizedBox(height: Sizes.p32);
-  static const h36 = SizedBox(height: Sizes.p36);
-  static const h40 = SizedBox(height: Sizes.p40);
-  static const h48 = SizedBox(height: Sizes.p48);
-  static const h56 = SizedBox(height: Sizes.p56);
-  static const h64 = SizedBox(height: Sizes.p64);
-  static const h72 = SizedBox(height: Sizes.p72);
-  static const h80 = SizedBox(height: Sizes.p80);
+  static const h4 = SizedBox(height: Size.p4);
+  static const h8 = SizedBox(height: Size.p8);
+  static const h12 = SizedBox(height: Size.p12);
+  static const h16 = SizedBox(height: Size.p16);
+  static const h20 = SizedBox(height: Size.p20);
+  static const h24 = SizedBox(height: Size.p24);
+  static const h28 = SizedBox(height: Size.p28);
+  static const h32 = SizedBox(height: Size.p32);
+  static const h36 = SizedBox(height: Size.p36);
+  static const h40 = SizedBox(height: Size.p40);
+  static const h48 = SizedBox(height: Size.p48);
+  static const h56 = SizedBox(height: Size.p56);
+  static const h64 = SizedBox(height: Size.p64);
+  static const h72 = SizedBox(height: Size.p72);
+  static const h80 = SizedBox(height: Size.p80);
 }
