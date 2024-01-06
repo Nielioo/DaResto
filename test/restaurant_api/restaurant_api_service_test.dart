@@ -3,120 +3,96 @@ import 'package:daresto/services/services.dart';
 import 'package:daresto/shared/shared.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 
-import 'restaurant_api_service_test.mocks.dart';
+import 'package:mocktail/mocktail.dart';
 
-@GenerateMocks([http.Client])
+class MockClient extends Mock implements http.Client {}
+
 void main() {
   group('RestaurantApiService', () {
-    final client = MockClient();
-    final apiService = RestaurantApiService(client: client);
+    late http.Client client;
+    late RestaurantApiService apiService;
 
-    test('returns a restaurant list if the http call completes successfully',
-        () async {
-      when(client.get(Uri.parse('${Const.baseUrl}/list'))).thenAnswer(
-          (_) async => http.Response(
-              '{"restaurants": [{"id": "1", "name": "Restaurant 1"}]}', 200));
-
-      expect((await apiService.getRestaurantList()).restaurants,
-          isA<List<RestaurantList>>());
+    setUp(() {
+      client = MockClient();
+      apiService = RestaurantApiService(client: client);
     });
 
-    test('returns a restaurant detail if the http call completes successfully',
-        () async {
-      when(client.get(Uri.parse('${Const.baseUrl}/detail/1'))).thenAnswer(
-          (_) async => http.Response(
-              '{"restaurant": {"id": "1", "name": "Restaurant 1"}}', 200));
+    group('getRestaurantList', () {
+      test('returns restaurant list if the http call completes successfully',
+          () async {
+        const jsonString = '{"error":false,"message":'
+            '"success","count":20,"restaurants":[]}';
+        final uri = Uri.parse('${Const.baseUrl}/list');
+        when(() => client.get(uri))
+            .thenAnswer((_) async => http.Response(jsonString, 200));
 
-      expect((await apiService.getRestaurantDetail("1")).restaurant,
-          isA<RestaurantList>());
+        expect(await apiService.getRestaurantList(), isA<GetRestaurantList>());
+      });
+
+      test('throws an exception if the http call completes with an error',
+          () async {
+        final uri = Uri.parse('${Const.baseUrl}/list');
+        when(() => client.get(uri))
+            .thenAnswer((_) async => http.Response('Not Found', 404));
+
+        expect(apiService.getRestaurantList(), throwsException);
+      });
     });
 
-    test(
-        'returns a restaurant search result if the http call completes successfully',
-        () async {
-      when(client.get(Uri.parse('${Const.baseUrl}/search?q=test'))).thenAnswer(
-          (_) async => http.Response(
-              '{"restaurants": [{"id": "1", "name": "Restaurant 1"}]}', 200));
+    group('getRestaurantDetail', () {
+      test('returns restaurant detail if the http call completes successfully',
+          () async {
+        const jsonString = '{"error":false,"message":"success","restaurant":'
+            '{"id":"rqdv5juczeskfw1e867","name":"Test Restaurant",'
+            '"description":"Test Description","city":"Test City",'
+            '"address":"Test Address","pictureId":"Test Picture",'
+            '"categories":[],"menus":{"foods":[],"drinks":[]},'
+            '"rating":4.2,"customerReviews":[]}}';
+        const id = 'rqdv5juczeskfw1e867';
+        final uri = Uri.parse('${Const.baseUrl}/detail/$id');
+        when(() => client.get(uri))
+            .thenAnswer((_) async => http.Response(jsonString, 200));
 
-      expect((await apiService.getRestaurantSearch("test")).restaurants,
-          isA<List<RestaurantList>>());
+        expect(await apiService.getRestaurantDetail(id),
+            isA<GetRestaurantDetail>());
+      });
+
+      test('throws an exception if the http call completes with an error',
+          () async {
+        const id = 'rqdv5juczeskfw1e867';
+        final uri = Uri.parse('${Const.baseUrl}/detail/$id');
+        when(() => client.get(uri))
+            .thenAnswer((_) async => http.Response('Not Found', 404));
+
+        expect(apiService.getRestaurantDetail(id), throwsException);
+      });
+    });
+
+    group('getRestaurantSearch', () {
+      test(
+          'returns restaurant search results if the http call completes successfully',
+          () async {
+        const jsonString =
+            '{"error":false,"founded":20,"restaurants":[]}';
+        const query = 'Test Restaurant';
+        final uri = Uri.parse('${Const.baseUrl}/search?q=$query');
+        when(() => client.get(uri))
+            .thenAnswer((_) async => http.Response(jsonString, 200));
+
+        expect(await apiService.getRestaurantSearch(query),
+            isA<RestaurantSearch>());
+      });
+
+      test('throws an exception if the http call completes with an error',
+          () async {
+        const query = 'Test Restaurant';
+        final uri = Uri.parse('${Const.baseUrl}/search?q=$query');
+        when(() => client.get(uri))
+            .thenAnswer((_) async => http.Response('Not Found', 404));
+
+        expect(apiService.getRestaurantSearch(query), throwsException);
+      });
     });
   });
 }
-
-
-// void main() {
-//   group('Restaurant List API Test', () {
-//     group('Get Restaurant List', () {
-//       test('Should be able to parse GetRestaurantListFromJson from json',
-//           () async {
-//         final response = await http
-//             .get(Uri.parse('https://restaurant-api.dicoding.dev/list'));
-
-//         if (response.statusCode == 200) {
-//           GetRestaurantList result = GetRestaurantListFromJson(response.body);
-//           expect(result.error, false);
-//           expect(result.message, "success");
-//           expect(result.count, 20);
-//           expect(result.restaurants, isA<List<RestaurantList>>());
-//         } else {
-//           throw Exception('Failed to load restaurant list');
-//         }
-//       });
-//     });
-
-//     group('Get Restaurant Detail', () {
-//       test('Should be able to parse getRestaurantDetailFromJson from json',
-//           () async {
-//         final response = await http.get(Uri.parse(
-//             'https://restaurant-api.dicoding.dev/detail/rqdv5juczeskfw1e867'));
-
-//         if (response.statusCode == 200) {
-//           GetRestaurantDetail result =
-//               getRestaurantDetailFromJson(response.body);
-//           expect(result.error, false);
-//           expect(result.message, 'success');
-//           expect(result.restaurant.id, 'rqdv5juczeskfw1e867');
-//           expect(result.restaurant.name, 'Melting Pot');
-//           expect(result.restaurant.description, isA<String>());
-//           expect(result.restaurant.city, 'Medan');
-//           expect(result.restaurant.address, 'Jln. Pandeglang no 19');
-//           expect(result.restaurant.pictureId, '14');
-//           expect(result.restaurant.categories, isA<List<Category>>());
-//           expect(result.restaurant.menus, isA<Menus>());
-//           expect(result.restaurant.rating, 4.2);
-//           expect(
-//               result.restaurant.customerReviews, isA<List<CustomerReview>>());
-//         } else {
-//           throw Exception('Failed to load restaurant detail');
-//         }
-//       });
-//     });
-
-//     group('Get Restaurant Search', () {
-//       test('Should be able to parse restaurantSearchFromJson from json',
-//           () async {
-//         final response = await http.get(
-//             Uri.parse('https://restaurant-api.dicoding.dev/search?q=kafe'));
-
-//         if (response.statusCode == 200) {
-//           RestaurantSearch result = restaurantSearchFromJson(response.body);
-//           expect(result.error, false);
-//           expect(result.founded, 4);
-//           expect(result.restaurants.length, 4);
-//           expect(result.restaurants[0].id, 's1knt6za9kkfw1e867');
-//           expect(result.restaurants[0].name, 'Kafe Kita');
-//           expect(result.restaurants[0].description, isA<String>());
-//           expect(result.restaurants[0].pictureId, '25');
-//           expect(result.restaurants[0].city, 'Gorontalo');
-//           expect(result.restaurants[0].rating, 4);
-//         } else {
-//           throw Exception('Failed to load restaurant search');
-//         }
-//       });
-//     });
-//   });
-// }
